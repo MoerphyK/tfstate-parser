@@ -8,7 +8,7 @@
         "OutputPath": "$.Payload",
         "Parameters": {
           "Payload.$": "$",
-          "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
+          "FunctionName": "${}"
         },
         "Next": "Organizations"
       },
@@ -26,7 +26,7 @@
               "OutputPath": "$.Payload",
               "Parameters": {
                 "Payload.$": "$",
-                "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
+                "FunctionName": "${}"
               },
               "Next": "Get Workspaces"
             },
@@ -36,7 +36,7 @@
               "OutputPath": "$.Payload",
               "Parameters": {
                 "Payload.$": "$",
-                "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
+                "FunctionName": "${}"
               },
               "Next": "Workspaces"
             },
@@ -54,7 +54,7 @@
                     "OutputPath": "$.Payload",
                     "Parameters": {
                       "Payload.$": "$",
-                      "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
+                      "FunctionName": "${}"
                     },
 
                     "Next": "Rules Found"
@@ -81,7 +81,7 @@
                     "OutputPath": "$.Payload",
                     "Parameters": {
                       "Payload.$": "$",
-                      "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
+                      "FunctionName": "${}"
                     },
                     "End": true
                   }
@@ -99,7 +99,7 @@
         "OutputPath": "$.Payload",
         "Parameters": {
           "Payload.$": "$",
-          "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
+          "FunctionName": "${}"
         },
 
         "End": true
