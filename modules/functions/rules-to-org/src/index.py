@@ -10,7 +10,7 @@ s3_client = boto3.client('s3')
 # Default timeouts for requests to the puppet api (in seconds)
 default_request_timeout = 15.0
 
-service="tfstate-parser-parameter-validation"
+service="tfstate-parser-rules-to-org"
 logger = Logger(service=service)
 
 def lambda_handler(event, context):

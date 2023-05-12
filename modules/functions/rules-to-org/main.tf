@@ -1,13 +1,3 @@
-data "aws_iam_policy_document" "lambda_secret_access_policy_document" {
-  statement {
-    actions = [
-      "secretsmanager:GetSecretValue"
-    ]
-
-    resources = [var.tfe_token_arn]
-  }
-}
-
 data "aws_iam_policy_document" "s3_rules_access_policy_document" {
   statement {
     actions = [
@@ -25,10 +15,6 @@ module "generic_lambda" {
   source_dir       = "${path.module}/src"
 
   execution_role_policies = [
-    {
-      "name" = "secrets-access"
-      "json" = data.aws_iam_policy_document.lambda_secret_access_policy_document.json
-    },
     {
       "name" = "rules-s3-access"
       "json" = data.aws_iam_policy_document.s3_rules_access_policy_document.json

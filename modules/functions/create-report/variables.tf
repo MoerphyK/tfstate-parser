@@ -1,7 +1,7 @@
 variable "function_name" {
   type        = string
   description = "Name of the function. Will be used as prefix for all related resources. Should not contain white spaces"
-  default     = "validate-parameters"
+  default     = "create-report"
 }
 
 variable "s3_source_bucket" {
