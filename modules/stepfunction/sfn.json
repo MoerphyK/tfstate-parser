@@ -28,19 +28,6 @@
                 "Payload.$": "$",
                 "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
               },
-              "Retry": [
-                {
-                  "ErrorEquals": [
-                    "Lambda.ServiceException",
-                    "Lambda.AWSLambdaException",
-                    "Lambda.SdkClientException",
-                    "Lambda.TooManyRequestsException"
-                  ],
-                  "IntervalSeconds": 2,
-                  "MaxAttempts": 6,
-                  "BackoffRate": 2
-                }
-              ],
               "Next": "Get Workspaces"
             },
             "Get Workspaces": {
@@ -51,19 +38,6 @@
                 "Payload.$": "$",
                 "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
               },
-              "Retry": [
-                {
-                  "ErrorEquals": [
-                    "Lambda.ServiceException",
-                    "Lambda.AWSLambdaException",
-                    "Lambda.SdkClientException",
-                    "Lambda.TooManyRequestsException"
-                  ],
-                  "IntervalSeconds": 2,
-                  "MaxAttempts": 6,
-                  "BackoffRate": 2
-                }
-              ],
               "Next": "Workspaces"
             },
             "Workspaces": {
@@ -82,19 +56,7 @@
                       "Payload.$": "$",
                       "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
                     },
-                    "Retry": [
-                      {
-                        "ErrorEquals": [
-                          "Lambda.ServiceException",
-                          "Lambda.AWSLambdaException",
-                          "Lambda.SdkClientException",
-                          "Lambda.TooManyRequestsException"
-                        ],
-                        "IntervalSeconds": 2,
-                        "MaxAttempts": 6,
-                        "BackoffRate": 2
-                      }
-                    ],
+
                     "Next": "Rules Found"
                   },
                   "Rules Found": {
@@ -121,19 +83,6 @@
                       "Payload.$": "$",
                       "FunctionName": "arn:aws:lambda:eu-central-1:186607432644:function:dummy-marvin-lambda:$LATEST"
                     },
-                    "Retry": [
-                      {
-                        "ErrorEquals": [
-                          "Lambda.ServiceException",
-                          "Lambda.AWSLambdaException",
-                          "Lambda.SdkClientException",
-                          "Lambda.TooManyRequestsException"
-                        ],
-                        "IntervalSeconds": 2,
-                        "MaxAttempts": 6,
-                        "BackoffRate": 2
-                      }
-                    ],
                     "End": true
                   }
                 }
