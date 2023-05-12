@@ -8,6 +8,16 @@ data "aws_iam_policy_document" "lambda_secret_access_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "s3_rules_access_policy_document" {
+  statement {
+    actions = [
+      "s3:*"
+    ]
+
+    resources = [var.rules_bucket]
+  }
+}
+
 module "generic_lambda" {
   source           = "../generic-lambda"
   function_name    = "${var.resource_prefix}-validate-parameters"
@@ -18,6 +28,10 @@ module "generic_lambda" {
     {
       "name" = "secrets-access"
       "json" = data.aws_iam_policy_document.lambda_secret_access_policy_document.json
+    },
+    {
+      "name" = "rules-s3-access"
+      "json" = data.aws_iam_policy_document.s3_rules_access_policy_document.json
     }
   ]
 

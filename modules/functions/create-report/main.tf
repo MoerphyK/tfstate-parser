@@ -16,7 +16,7 @@ module "generic_lambda" {
 
   execution_role_policies = [
     {
-      "name" = "secrets-access"
+      "name" = "report-s3-access"
       "json" = data.aws_iam_policy_document.s3_reporting_access_policy_document.json
     }
   ]
