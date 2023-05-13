@@ -1,0 +1,3 @@
+bucket         = "marvin-test-186607432644"
+key            = "states/tfstate-parser"
+region         = "eu-central-1"

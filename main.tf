@@ -7,7 +7,7 @@
 #################
 
 module "s3" {
-  source            = "modules/s3-buckets"
+  source            = "./modules/s3-buckets"
   encryption_key_id = module.kms.key_id
 
   resource_prefix = var.resource_prefix
@@ -15,14 +15,14 @@ module "s3" {
 }
 
 module "secrets" {
-  source = "modules/secrets"
+  source = "./modules/secrets"
 
   resource_prefix = var.resource_prefix
   tags            = var.tags
 }
 
 module "kms" {
-  source = "modules/kms"
+  source = "./modules/kms"
 
   resource_prefix = var.resource_prefix
   tags            = var.tags
@@ -33,7 +33,7 @@ module "kms" {
 ######################
 
 module "stepfunction" {
-  source = "modules/stepfunction"
+  source = "./modules/stepfunction"
   functions = {
     parameter-validation = module.parameter-validation.lambda_arn
     rules-to-org         = module.rules-to-org.lambda_arn
@@ -52,7 +52,7 @@ module "stepfunction" {
 #################
 
 module "default-layer" {
-  source           = "modules/layers/default-lambda-libs"
+  source           = "./modules/layers/default-lambda-libs"
   s3_source_bucket = module.s3.lambda_source_bucket
 
   resource_prefix = var.resource_prefix
@@ -60,7 +60,7 @@ module "default-layer" {
 }
 
 module "parameter-validation" {
-  source           = "modules/parameter-validation"
+  source           = "./modules/functions/parameter-validation"
   s3_source_bucket = module.s3.lambda_source_bucket
   layers = [
     module.default-layer.layer_arn
@@ -74,7 +74,7 @@ module "parameter-validation" {
 }
 
 module "rules-to-org" {
-  source       = "modules/rules-to-org"
+  source       = "./modules/functions/rules-to-org"
   rules_bucket = module.s3.rules_bucket
 
   resource_prefix = var.resource_prefix
@@ -82,7 +82,7 @@ module "rules-to-org" {
 }
 
 module "get-workspaces" {
-  source = "modules/get-workspaces"
+  source = "./modules/functions/get-workspaces"
   layers = [
     module.default-layer.layer_arn
   ]
@@ -95,7 +95,7 @@ module "get-workspaces" {
 }
 
 module "rules-to-workspace" {
-  source = "modules/rules-to-workspace"
+  source = "./modules/functions/rules-to-workspace"
   layers = [
     module.default-layer.layer_arn
   ]
@@ -108,7 +108,7 @@ module "rules-to-workspace" {
 }
 
 module "apply-rules" {
-  source = "modules/apply-rules"
+  source = "./modules/functions/apply-rules"
   layers = [
     module.default-layer.layer_arn
   ]
@@ -122,7 +122,7 @@ module "apply-rules" {
 }
 
 module "create-report" {
-  source        = "modules/create-report"
+  source        = "./modules/functions/create-report"
   report_bucket = module.s3.report_bucket
 
   resource_prefix = var.resource_prefix
