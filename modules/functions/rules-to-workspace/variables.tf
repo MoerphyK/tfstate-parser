@@ -14,6 +14,17 @@ variable "layers" {
   description = "Layers (arns) that should be attached to the lambda"
 }
 
+variable "tfe_token_arn" {
+  type        = string
+  description = "ARN of the secretsmanager secret to connect to the tfe api"
+}
+
+variable "tfe_endpoint" {
+  type        = string
+  description = "endpoint for the post /create /update tfe CMDB CI VM instance"
+}
+
+
 variable "rules_bucket" {
   type        = string
   description = "Bucket where the rules are stored"

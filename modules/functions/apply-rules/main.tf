@@ -39,7 +39,6 @@ module "generic_lambda" {
     RULES_BUCKET          = var.rules_bucket,
     TFE_TOKEN_CREDENTIALS = var.tfe_token_arn,
     TFE_ENDPOINT          = var.tfe_endpoint,
-    TFE_AUTH_ENDPOINT     = var.tfe_auth_endpoint
   }
 
   tags            = var.tags

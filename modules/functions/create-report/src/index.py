@@ -7,7 +7,7 @@ import requests
 # Init secretsmanager from boto3
 s3_client = boto3.client('s3')
 
-report_bucket = os.environ['REPORT_BUCKET']
+reporting_bucket = os.environ['REPORTING_BUCKET']
 
 # Default timeouts for requests to the puppet api (in seconds)
 default_request_timeout = 15.0

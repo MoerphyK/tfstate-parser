@@ -24,10 +24,6 @@ variable "tfe_endpoint" {
   description = "endpoint for the post /create /update tfe CMDB CI VM instance"
 }
 
-variable "tfe_auth_endpoint" {
-  type        = string
-  description = "endpoint for the tfe bearer token creation"
-}
 
 variable "resource_prefix" {
   type = string

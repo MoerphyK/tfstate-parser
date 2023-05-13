@@ -23,8 +23,7 @@ module "generic_lambda" {
 
   environment = {
     TFE_TOKEN_CREDENTIALS = var.tfe_token_arn,
-    TFE_ENDPOINT          = var.tfe_endpoint,
-    TFE_AUTH_ENDPOINT     = var.tfe_auth_endpoint
+    TFE_ENDPOINT          = var.tfe_endpoint
   }
 
   tags            = var.tags

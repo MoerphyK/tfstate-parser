@@ -66,7 +66,6 @@ module "parameter-validation" {
     module.default-layer.layer_arn
   ]
   tfe_endpoint      = var.tfe_endpoint
-  tfe_auth_endpoint = var.tfe_auth_endpoint
   tfe_token_arn     = module.secrets.tfe_token_arn
 
   resource_prefix = var.resource_prefix
@@ -75,6 +74,10 @@ module "parameter-validation" {
 
 module "rules-to-org" {
   source       = "./modules/functions/rules-to-org"
+  s3_source_bucket = module.s3.lambda_source_bucket
+  layers = [
+    module.default-layer.layer_arn
+  ]
   rules_bucket = module.s3.rules_bucket
 
   resource_prefix = var.resource_prefix
@@ -83,11 +86,11 @@ module "rules-to-org" {
 
 module "get-workspaces" {
   source = "./modules/functions/get-workspaces"
+  s3_source_bucket = module.s3.lambda_source_bucket
   layers = [
     module.default-layer.layer_arn
   ]
   tfe_endpoint      = var.tfe_endpoint
-  tfe_auth_endpoint = var.tfe_auth_endpoint
   tfe_token_arn     = module.secrets.tfe_token_arn
 
   resource_prefix = var.resource_prefix
@@ -96,12 +99,13 @@ module "get-workspaces" {
 
 module "rules-to-workspace" {
   source = "./modules/functions/rules-to-workspace"
+  s3_source_bucket = module.s3.lambda_source_bucket
   layers = [
     module.default-layer.layer_arn
   ]
   tfe_endpoint      = var.tfe_endpoint
-  tfe_auth_endpoint = var.tfe_auth_endpoint
   tfe_token_arn     = module.secrets.tfe_token_arn
+  rules_bucket      = module.s3.rules_bucket
 
   resource_prefix = var.resource_prefix
   tags            = var.tags
@@ -109,11 +113,11 @@ module "rules-to-workspace" {
 
 module "apply-rules" {
   source = "./modules/functions/apply-rules"
+  s3_source_bucket = module.s3.lambda_source_bucket
   layers = [
     module.default-layer.layer_arn
   ]
   tfe_endpoint      = var.tfe_endpoint
-  tfe_auth_endpoint = var.tfe_auth_endpoint
   tfe_token_arn     = module.secrets.tfe_token_arn
   rules_bucket      = module.s3.rules_bucket
 
@@ -123,7 +127,11 @@ module "apply-rules" {
 
 module "create-report" {
   source        = "./modules/functions/create-report"
-  report_bucket = module.s3.report_bucket
+  s3_source_bucket = module.s3.lambda_source_bucket
+  layers = [
+    module.default-layer.layer_arn
+  ]
+  reporting_bucket = module.s3.reporting_bucket
 
   resource_prefix = var.resource_prefix
   tags            = var.tags
