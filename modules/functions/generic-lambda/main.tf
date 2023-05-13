@@ -5,14 +5,14 @@
 terraform {
   required_providers {
     archive = {
-      source = "hashicorp/archive"
+      source  = "hashicorp/archive"
       version = "2.3.0"
     }
   }
 }
 
 resource "aws_lambda_function" "lambda_function" {
-  depends_on = [aws_iam_role_policy_attachment.AWSLambdaVPCAccessExecutionRole]
+  depends_on        = [aws_iam_role_policy_attachment.AWSLambdaVPCAccessExecutionRole]
   function_name     = var.function_name
   handler           = var.function_handler
   runtime           = var.function_runtime

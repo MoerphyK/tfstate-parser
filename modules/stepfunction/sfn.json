@@ -8,7 +8,7 @@
         "OutputPath": "$.Payload",
         "Parameters": {
           "Payload.$": "$",
-          "FunctionName": "${}"
+          "FunctionName": "${parameter-validation}"
         },
         "Next": "Organizations"
       },
@@ -26,7 +26,7 @@
               "OutputPath": "$.Payload",
               "Parameters": {
                 "Payload.$": "$",
-                "FunctionName": "${}"
+                "FunctionName": "${rules-to-org}"
               },
               "Next": "Get Workspaces"
             },
@@ -36,7 +36,7 @@
               "OutputPath": "$.Payload",
               "Parameters": {
                 "Payload.$": "$",
-                "FunctionName": "${}"
+                "FunctionName": "${get-workspaces}"
               },
               "Next": "Workspaces"
             },
@@ -54,7 +54,7 @@
                     "OutputPath": "$.Payload",
                     "Parameters": {
                       "Payload.$": "$",
-                      "FunctionName": "${}"
+                      "FunctionName": "${rules-to-workspace}"
                     },
 
                     "Next": "Rules Found"
@@ -70,18 +70,18 @@
                         "Next": "Success"
                       }
                     ],
-                    "Default": "Apply Rule"
+                    "Default": "Apply Rules"
                   },
                   "Success": {
                     "Type": "Succeed"
                   },
-                  "Apply Rule": {
+                  "Apply Rules": {
                     "Type": "Task",
                     "Resource": "arn:aws:states:::lambda:invoke",
                     "OutputPath": "$.Payload",
                     "Parameters": {
                       "Payload.$": "$",
-                      "FunctionName": "${}"
+                      "FunctionName": "${apply-rules}"
                     },
                     "End": true
                   }
@@ -99,7 +99,7 @@
         "OutputPath": "$.Payload",
         "Parameters": {
           "Payload.$": "$",
-          "FunctionName": "${}"
+          "FunctionName": "${create-report}"
         },
 
         "End": true

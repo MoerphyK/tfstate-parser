@@ -22,7 +22,7 @@ module "generic_lambda" {
   ]
 
   environment = {
-    REPORTING_BUCKET  = var.reporting_bucket
+    REPORTING_BUCKET = var.reporting_bucket
   }
 
   tags            = var.tags

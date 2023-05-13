@@ -22,7 +22,7 @@ module "generic_lambda" {
   ]
 
   environment = {
-    RULES_BUCKET  = var.rules_bucket
+    RULES_BUCKET = var.rules_bucket
   }
 
   tags            = var.tags

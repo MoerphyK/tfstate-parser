@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     archive = {
-      source = "hashicorp/archive"
+      source  = "hashicorp/archive"
       version = "2.3.0"
     }
   }
@@ -35,7 +35,7 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   s3_bucket                = var.s3_source_bucket
   s3_key                   = aws_s3_object.object.id
   s3_object_version        = aws_s3_object.object.version_id
-  description              = "Default libraries for MPI orchestrator lambdas"
+  description              = "Default libraries for TFState parser lambdas"
   layer_name               = "${var.resource_prefix}-${var.lambda_layer_name}"
   compatible_runtimes      = [var.function_runtime]
 }
