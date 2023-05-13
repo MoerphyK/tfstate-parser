@@ -12,10 +12,10 @@ resource "aws_s3_bucket_public_access_block" "lambda_source_bucket_access_block"
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_acl" "lambda_source_acl" {
-  bucket = aws_s3_bucket.lambda_source_bucket.id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "lambda_source_acl" {
+#   bucket = aws_s3_bucket.lambda_source_bucket.id
+#   acl    = "private"
+# }
 
 resource "aws_s3_bucket_versioning" "lambda_source_versioning" {
   bucket = aws_s3_bucket.lambda_source_bucket.id

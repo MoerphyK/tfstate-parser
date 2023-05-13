@@ -4,13 +4,13 @@ data "aws_iam_policy_document" "s3_reporting_access_policy_document" {
       "s3:*"
     ]
 
-    resources = [var.reporting_bucket]
+    resources = ["arn:aws:s3:::${var.reporting_bucket}", "arn:aws:s3:::${var.reporting_bucket}/*"]
   }
 }
 
 module "generic_lambda" {
   source           = "../generic-lambda"
-  function_name    = "${var.resource_prefix}-validate-parameters"
+  function_name    = "${var.resource_prefix}-${var.function_name}"
   s3_source_bucket = var.s3_source_bucket
   source_dir       = "${path.module}/src"
 

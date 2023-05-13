@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "lambda_secret_access_policy_document" {
 
 module "generic_lambda" {
   source           = "../generic-lambda"
-  function_name    = "${var.resource_prefix}-validate-parameters"
+  function_name    = "${var.resource_prefix}-${var.function_name}"
   s3_source_bucket = var.s3_source_bucket
   source_dir       = "${path.module}/src"
 
