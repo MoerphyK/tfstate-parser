@@ -35,8 +35,7 @@ module "kms" {
 module "stepfunction" {
   source = "./modules/stepfunction"
   functions = {
-    parameter-validation = module.parameter-validation.lambda_arn
-    rules-to-org         = module.rules-to-org.lambda_arn
+    get-organizations    = module.get-organizations.lambda_arn
     get-workspaces       = module.get-workspaces.lambda_arn
     rules-to-workspace   = module.rules-to-workspace.lambda_arn
     apply-rules          = module.apply-rules.lambda_arn
@@ -59,26 +58,14 @@ module "default-layer" {
   tags            = var.tags
 }
 
-module "parameter-validation" {
-  source           = "./modules/functions/parameter-validation"
+module "get-organizations" {
+  source           = "./modules/functions/get-organizations"
   s3_source_bucket = module.s3.lambda_source_bucket
   layers = [
     module.default-layer.layer_arn
   ]
   tfe_endpoint      = var.tfe_endpoint
   tfe_token_arn     = module.secrets.tfe_token_arn
-
-  resource_prefix = var.resource_prefix
-  tags            = var.tags
-}
-
-module "rules-to-org" {
-  source       = "./modules/functions/rules-to-org"
-  s3_source_bucket = module.s3.lambda_source_bucket
-  layers = [
-    module.default-layer.layer_arn
-  ]
-  rules_bucket = module.s3.rules_bucket
 
   resource_prefix = var.resource_prefix
   tags            = var.tags

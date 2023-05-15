@@ -1,7 +1,7 @@
 variable "function_name" {
   type        = string
   description = "Name of the function. Will be used as prefix for all related resources. Should not contain white spaces"
-  default     = "parameter-validation"
+  default     = "get-organizations"
 }
 
 variable "s3_source_bucket" {

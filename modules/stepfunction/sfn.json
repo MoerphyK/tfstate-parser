@@ -1,35 +1,25 @@
 {
     "Comment": "A description of my state machine",
-    "StartAt": "Parameter Validation",
+    "StartAt": "Get Organizations",
     "States": {
-      "Parameter Validation": {
+      "Get Organizations": {
         "Type": "Task",
         "Resource": "arn:aws:states:::lambda:invoke",
         "OutputPath": "$.Payload",
         "Parameters": {
           "Payload.$": "$",
-          "FunctionName": "${parameter-validation}"
+          "FunctionName": "${get-organizations}"
         },
-        "Next": "Organizations"
+        "Next": "Organization Mapping"
       },
-      "Organizations": {
+      "Organization Mapping": {
         "Type": "Map",
         "ItemProcessor": {
           "ProcessorConfig": {
             "Mode": "INLINE"
           },
-          "StartAt": "Map Rules to Organization",
+          "StartAt": "Get Workspaces",
           "States": {
-            "Map Rules to Organization": {
-              "Type": "Task",
-              "Resource": "arn:aws:states:::lambda:invoke",
-              "OutputPath": "$.Payload",
-              "Parameters": {
-                "Payload.$": "$",
-                "FunctionName": "${rules-to-org}"
-              },
-              "Next": "Get Workspaces"
-            },
             "Get Workspaces": {
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
@@ -38,9 +28,9 @@
                 "Payload.$": "$",
                 "FunctionName": "${get-workspaces}"
               },
-              "Next": "Workspaces"
+              "Next": "Workspace Mapping"
             },
-            "Workspaces": {
+            "Workspace Mapping": {
               "Type": "Map",
               "ItemProcessor": {
                 "ProcessorConfig": {
@@ -64,15 +54,15 @@
                     "Choices": [
                       {
                         "Not": {
-                          "Variable": "$.rules",
+                          "Variable": "$.rule_keys",
                           "IsPresent": true
                         },
-                        "Next": "Success"
+                        "Next": "No Rules apply"
                       }
                     ],
                     "Default": "Apply Rules"
                   },
-                  "Success": {
+                  "No Rules apply": {
                     "Type": "Succeed"
                   },
                   "Apply Rules": {
