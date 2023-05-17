@@ -1,7 +1,7 @@
 variable "function_name" {
   type        = string
   description = "Name of the function. Will be used as prefix for all related resources. Should not contain white spaces"
-  default     = "create-rule-metadata"
+  default     = "create-rule-table-entry"
 }
 
 variable "s3_source_bucket" {

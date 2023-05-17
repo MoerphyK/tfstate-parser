@@ -33,3 +33,10 @@ resource "aws_s3_object" "object" {
   bucket = aws_s3_bucket.rules_bucket.id
   key    = "ALL/${each.key}/"
 }
+
+# For testing purposes
+resource "aws_s3_object" "ago_keys" {
+  for_each = toset( ["AWS/DEV", "AWS/QA", "AWS/PROD","AZURE/DEV", "AZURE/QA", "AZURE/PROD"] )
+  bucket = aws_s3_bucket.rules_bucket.id
+  key    = "AGO/${each.key}/"
+}
