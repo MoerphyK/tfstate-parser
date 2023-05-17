@@ -15,20 +15,5 @@ resource "aws_dynamodb_table" "rules_table" {
     type = "S"
   }
 
-  attribute {
-    name = "CSP"
-    type = "S"
-  }
-
-  attribute {
-    name = "Entity"
-    type = "S"
-  }
-
-  attribute {
-    name = "Environment"
-    type = "S"
-  }
-
   tags = var.tags
 }
