@@ -27,3 +27,9 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "rules_encryption"
     }
   }
 }
+
+resource "aws_s3_object" "object" {
+  for_each = toset( ["AWS/DEV", "AWS/QA", "AWS/PROD","AZURE/DEV", "AZURE/QA", "AZURE/PROD"] )
+  bucket = aws_s3_bucket.rules_bucket.id
+  key    = "ALL/${each.key}/"
+}
