@@ -1,0 +1,151 @@
+{
+    "data": {
+        "id": "ws-:id:",
+        "type": "workspaces",
+        "attributes": {
+            "created-at": "2022-04-05T13:39:19.628Z",
+            "environment": "default",
+            "name": "foobar-dev",
+            "terraform-version": "1.3.9",
+            "updated-at": "2023-05-19T14:31:07.455Z",
+            "resource-count": 1234,
+            "permissions": {
+                "can-update": true,
+                "can-destroy": true,
+                "can-queue-run": true,
+                "can-read-variable": true,
+                "can-update-variable": true,
+                "can-read-state-versions": true,
+                "can-read-state-outputs": true,
+                "can-create-state-versions": true,
+                "can-queue-apply": true,
+                "can-lock": true,
+                "can-unlock": true,
+                "can-force-unlock": true,
+                "can-read-settings": true,
+                "can-manage-tags": true,
+                "can-manage-run-tasks": true,
+                "can-force-delete": true,
+                "can-manage-assessments": true,
+                "can-read-assessment-results": true,
+                "can-queue-destroy": true
+            },
+            "actions": {
+                "is-destroyable": true
+            },
+            "description": null,
+            "file-triggers-enabled": true,
+            "trigger-prefixes": [],
+            "trigger-patterns": [],
+            "assessments-enabled": false,
+            "last-assessment-result-at": "2023-05-19T14:31:07.164Z",
+            "source": "tfe-api",
+            "source-name": null,
+            "source-url": null,
+            "tag-names": [
+                "dev",
+                "nonprod",
+                "purpose:mpi"
+            ]
+        },
+        "relationships": {
+            "organization": {
+                "data": {
+                    "id": "AGO-TestOrga",
+                    "type": "organizations"
+                }
+            },
+            "current-run": {
+                "data": {
+                    "id": "run-:id:",
+                    "type": "runs"
+                },
+                "links": {
+                    "related": "/api/v2/runs/run-:id:"
+                }
+            },
+            "latest-run": {
+                "data": {
+                    "id": "run-:id:",
+                    "type": "runs"
+                },
+                "links": {
+                    "related": "/api/v2/runs/run-:id:"
+                }
+            },
+            "outputs": {
+                "data": [],
+                "links": {
+                    "related": "/api/v2/workspaces/ws-:id:/current-state-version-outputs"
+                }
+            },
+            "remote-state-consumers": {
+                "links": {
+                    "related": "/api/v2/workspaces/ws-:id:/relationships/remote-state-consumers"
+                }
+            },
+            "current-state-version": {
+                "data": {
+                    "id": "sv-:id:",
+                    "type": "state-versions"
+                },
+                "links": {
+                    "related": "/api/v2/workspaces/ws-:id:/current-state-version"
+                }
+            },
+            "current-configuration-version": {
+                "data": {
+                    "id": "cv-:id:",
+                    "type": "configuration-versions"
+                },
+                "links": {
+                    "related": "/api/v2/configuration-versions/cv-:id:"
+                }
+            },
+            "agent-pool": {
+                "data": null
+            },
+            "readme": {
+                "data": {
+                    "id": "5694",
+                    "type": "workspace-readme"
+                }
+            },
+            "project": {
+                "data": {
+                    "id": "prj-:id:",
+                    "type": "projects"
+                }
+            },
+            "current-assessment-result": {
+                "data": {
+                    "id": "asmtres-:id:",
+                    "type": "assessment-results"
+                },
+                "links": {
+                    "related": "/api/v2/workspaces/ws-:id:/current-assessment-result"
+                }
+            },
+            "vars": {
+                "data": [
+                    {
+                        "id": "var-:id:",
+                        "type": "vars"
+                    },
+                    {
+                        "id": "var-:id:",
+                        "type": "vars"
+                    },
+                    {
+                        "id": "var-:id:",
+                        "type": "vars"
+                    }
+                ]
+            }
+        },
+        "links": {
+            "self": "/api/v2/organizations/AGO-TestOrga/workspaces/:workspace-name:",
+            "self-html": "/app/AGO-TestOrga/workspaces/:workspace-name:"
+        }
+    }
+}

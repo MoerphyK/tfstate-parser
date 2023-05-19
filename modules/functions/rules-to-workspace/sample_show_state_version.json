@@ -1,0 +1,1297 @@
+{
+    "data": {
+        "id": "sv-:id:",
+        "type": "state-versions",
+        "attributes": {
+            "created-at": "2023-05-11T13:53:56.599Z",
+            "size": 419059,
+            "hosted-state-download-url": "downloadurl",
+            "hosted-json-state-download-url": "downloadurl",
+            "modules": {
+                "root.kms": {
+                    "aws_kms_key": 1,
+                    "aws_kms_grant": 2
+                },
+                "root.secrets": {
+                    "aws_secretsmanager_secret": 6
+                },
+                "root.dashboard": {
+                    "data.template_file": 1,
+                    "aws_cloudwatch_dashboard": 1
+                },
+                "root.apigateway": {
+                    "aws_iam_role": 17,
+                    "aws_iam_policy": 16,
+                    "aws_wafv2_web_acl": 1,
+                    "data.template_file": 1,
+                    "aws_api_gateway_stage": 1,
+                    "aws_api_gateway_account": 1,
+                    "aws_api_gateway_rest_api": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_caller_identity": 1,
+                    "aws_api_gateway_deployment": 2,
+                    "data.aws_iam_policy_document": 34,
+                    "aws_wafv2_web_acl_association": 1,
+                    "aws_iam_role_policy_attachment": 17,
+                    "aws_api_gateway_method_settings": 1,
+                    "aws_api_gateway_gateway_response": 1
+                },
+                "root.s3-buckets": {
+                    "aws_s3_bucket": 3,
+                    "aws_s3_object": 2,
+                    "aws_s3_bucket_acl": 3,
+                    "aws_s3_bucket_versioning": 1,
+                    "aws_s3_bucket_public_access_block": 3,
+                    "aws_s3_bucket_server_side_encryption_configuration": 3
+                },
+                "root.default-libs": {
+                    "aws_s3_object": 1,
+                    "data.archive_file": 1,
+                    "aws_lambda_layer_version": 1
+                },
+                "root.table-backups": {
+                    "aws_iam_role": 1,
+                    "aws_backup_plan": 1,
+                    "aws_backup_vault": 1,
+                    "aws_backup_selection": 1,
+                    "data.aws_iam_policy_document": 1,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.vm-role-lookup": {
+                    "aws_dynamodb_table": 1,
+                    "data.template_file": 6,
+                    "aws_dynamodb_table_item": 6
+                },
+                "root.hostname-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.technical-users": {
+                    "aws_iam_role": 1,
+                    "aws_iam_user": 1,
+                    "aws_iam_user_policy": 1,
+                    "data.aws_caller_identity": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.do-ip-update-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.hostname-counter": {
+                    "aws_dynamodb_table": 1
+                },
+                "root.task-state-table": {
+                    "aws_dynamodb_table": 1
+                },
+                "root.do-ad-move-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.sfn-status-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.validation-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.deregistration-sns": {
+                    "aws_sns_topic": 2
+                },
+                "root.opco-mapping-table": {
+                    "aws_dynamodb_table": 1,
+                    "data.template_file": 36,
+                    "aws_dynamodb_table_item": 36
+                },
+                "root.tfe-token-rotation": {
+                    "aws_kms_key": 1,
+                    "aws_iam_policy": 1,
+                    "data.tfe_workspace": 1,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-gp-update-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.health-check-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.load-vm-data-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.orchestration-tools": {
+                    "aws_s3_object": 1,
+                    "data.archive_file": 1,
+                    "aws_lambda_layer_version": 1,
+                    "aws_lambda_layer_version_permission": 1
+                },
+                "root.check-move-ad-object": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.feature-toggle-table": {
+                    "aws_dynamodb_table": 1,
+                    "data.template_file": 3,
+                    "aws_dynamodb_table_item": 3
+                },
+                "root.incident-filter-table": {
+                    "aws_dynamodb_table": 1
+                },
+                "root.network.network-spoke": {
+                    "aws_vpc": 1,
+                    "aws_subnet": 4,
+                    "aws_route_table": 1,
+                    "aws_vpc_endpoint": 2,
+                    "aws_security_group": 2,
+                    "aws_ram_resource_share": 4,
+                    "aws_route53_resolver_config": 1,
+                    "aws_route_table_association": 1,
+                    "aws_ram_resource_association": 1,
+                    "data.aws_ec2_transit_gateway": 1,
+                    "data.aws_route53_resolver_rule": 18,
+                    "data.aws_ec2_managed_prefix_list": 2,
+                    "aws_vpc_ipv4_cidr_block_association": 1,
+                    "aws_route53_resolver_rule_association": 18,
+                    "aws_ec2_transit_gateway_vpc_attachment": 1
+                },
+                "root.silva-incident-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.do-silva-id-update-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.incident-report-lambda": {
+                    "data.aws_iam_policy_document": 3
+                },
+                "root.manual-silva-bs-update": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.opsdashboards-failover": {
+                    "data.template_file": 1,
+                    "aws_cloudwatch_dashboard": 1
+                },
+                "root.start-ip-update-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.check-lisa-gpuad-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.create-registration-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.delete-registration-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.do-lisa-add-user-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.do-scom-register-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.do-sql-db-access-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.technical-service-table": {
+                    "aws_dynamodb_table": 1,
+                    "data.template_file": 17,
+                    "aws_dynamodb_table_item": 17
+                },
+                "root.check-post-config-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.registration-state-table": {
+                    "aws_dynamodb_table": 1
+                },
+                "root.do-scom-deregister-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.lisa-csv-input.s3-storage": {
+                    "aws_s3_bucket": 1,
+                    "aws_s3_bucket_acl": 1,
+                    "aws_s3_bucket_policy": 1,
+                    "aws_s3_bucket_versioning": 1,
+                    "data.aws_iam_policy_document": 1,
+                    "aws_s3_bucket_public_access_block": 1,
+                    "aws_s3_bucket_server_side_encryption_configuration": 1
+                },
+                "root.regestration-report-event": {
+                    "data.template_file": 5,
+                    "aws_lambda_permission": 5,
+                    "aws_cloudwatch_event_rule": 5,
+                    "aws_cloudwatch_event_target": 5
+                },
+                "root.send-deregistration-mails": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.start-registration-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.start-vm-id-update-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.delete-registration-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.do-dns-batch-update-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.get-entity-metadata-lambda": {
+                    "data.aws_dynamodb_table": 1,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.opsdashboards-registration": {
+                    "data.template_file": 1,
+                    "aws_cloudwatch_dashboard": 1
+                },
+                "root.registration-report-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 2,
+                    "data.aws_iam_policy_document": 4
+                },
+                "root.deregistration-delete-state": {
+                    "data.template_file": 1,
+                    "aws_lambda_permission": 1,
+                    "aws_cloudwatch_event_rule": 1,
+                    "aws_cloudwatch_event_target": 1,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-ad-deregistration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-grad-registration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-puam-registration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-silva-ci-creation-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.get-ip-update-status-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.wait-for-user-action-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.deregistration-report-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 2,
+                    "data.aws_iam_policy_document": 4
+                },
+                "root.opsdashboards-deregistration": {
+                    "data.template_file": 1,
+                    "aws_cloudwatch_dashboard": 1
+                },
+                "root.do-grad-deregistration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-lisa-group-creation-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.do-puam-deregistration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.rerun-create-registration-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.rerun-delete-registration-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.vm-end-to-end-testing-trigger": {
+                    "aws_iam_role": 2,
+                    "data.aws_subnets": 1,
+                    "aws_ssm_parameter": 1,
+                    "data.archive_file": 1,
+                    "aws_security_group": 1,
+                    "aws_lambda_function": 1,
+                    "aws_scheduler_schedule": 4,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_caller_identity": 1,
+                    "data.aws_iam_policy_document": 1,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.get-registration-status-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.get-vm-id-update-status-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.hostname-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.do-silva-ci-vm-id-update-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.resume-after-user-action-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.do-ad-move-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-silva-axalis-ci-update-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-silva-ci-safe-creation-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.rerun-create-registration-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.rerun-delete-registration-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.retry-registration-report-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 2,
+                    "data.aws_iam_policy_document": 4
+                },
+                "root.sfn-status-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.validation-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-silva-ci-service-update-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-gp-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.health-check-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.load-vm-data-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.retry-deregistration-report-lambda": {
+                    "data.aws_iam_policy_document": 3
+                },
+                "root.check-move-ad-object.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-puppet-node-deregistration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.get-registration-retry-status-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.lisa-csv-input.add-lisa-users-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.puppet-execution-verification-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.run-opsdashboard-athena-query-lambda": {
+                    "data.aws_caller_identity": 1,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.silva-incident-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.incident-report-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 5,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 5
+                },
+                "root.manual-silva-bs-update.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.resume-retry-after-user-action-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.start-ip-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.check-lisa-gpuad-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-lisa-add-user-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-scom-register-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 5
+                },
+                "root.do-sql-db-access-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.lisa-csv-input.check-lisa-gpuad-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.lisa-csv-input.lisa-group-creation-sfn": {
+                    "aws_iam_role": 1,
+                    "aws_iam_policy": 1,
+                    "data.template_file": 1,
+                    "aws_sfn_state_machine": 1,
+                    "data.aws_iam_policy_document": 2,
+                    "aws_iam_role_policy_attachment": 1
+                },
+                "root.lisa-csv-input.silva-fetch-data-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.check-post-config-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.lisa-csv-input.create-lisa-group-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.do-scom-deregister-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 5
+                },
+                "root.do-silva-ci-deregistration-update-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.send-deregistration-mails.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.start-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.start-vm-id-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.delete-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-dns-batch-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.get-entity-metadata-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.lisa-csv-input.validate-lisa-input-lambda": {
+                    "data.aws_iam_policy_document": 2
+                },
+                "root.puppet-execution-task-verification-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.registration-report-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 6,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 7
+                },
+                "root.check-rehosting-target-registration-lambda": {
+                    "aws_security_group": 1,
+                    "aws_security_group_rule": 3,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.deregistration-delete-state.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.do-ad-deregistration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-grad-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-puam-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-silva-ci-creation-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.get-ip-update-status-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.wait-for-user-action-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.deregistration-report-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 6,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 7
+                },
+                "root.do-grad-deregistration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-lisa-group-creation-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-puam-deregistration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.get-registration-status-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.get-vm-id-update-status-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.do-silva-ci-vm-id-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.resume-after-user-action-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.do-silva-axalis-ci-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.do-silva-ci-safe-creation-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.lisa-csv-input.start-lisa-group-creation-lambda": {
+                    "aws_lambda_permission": 1,
+                    "aws_s3_bucket_notification": 1,
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.rerun-create-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.rerun-delete-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.retry-registration-report-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 6,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 7
+                },
+                "root.tfe-token-rotation.tfe-iam-credentials-rotation": {
+                    "aws_iam_role": 2,
+                    "aws_iam_user": 1,
+                    "aws_sns_topic": 1,
+                    "aws_iam_policy": 1,
+                    "data.aws_region": 1,
+                    "data.archive_file": 2,
+                    "aws_security_group": 1,
+                    "aws_lambda_function": 2,
+                    "aws_lambda_permission": 2,
+                    "aws_cloudwatch_log_group": 2,
+                    "data.aws_caller_identity": 1,
+                    "aws_cloudwatch_event_rule": 1,
+                    "aws_sns_topic_subscription": 1,
+                    "data.aws_lambda_invocation": 1,
+                    "aws_cloudwatch_event_target": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_user_policy_attachment": 2
+                },
+                "root.do-silva-ci-service-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.lisa-csv-input.do-silva-ci-service-update-lambda": {
+                    "data.aws_iam_policy_document": 1
+                },
+                "root.retry-deregistration-report-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 5,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 5
+                },
+                "root.do-puppet-node-deregistration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.get-registration-retry-status-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.lisa-csv-input.add-lisa-users-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.puppet-execution-verification-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.run-opsdashboard-athena-query-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.resume-retry-after-user-action-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.lisa-csv-input.check-lisa-gpuad-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.lisa-csv-input.silva-fetch-data-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.lisa-csv-input.create-lisa-group-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.do-silva-ci-deregistration-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.lisa-csv-input.validate-lisa-input-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 4,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.puppet-execution-task-verification-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.check-rehosting-target-registration-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 4
+                },
+                "root.lisa-csv-input.start-lisa-group-creation-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                },
+                "root.lisa-csv-input.do-silva-ci-service-update-lambda.generic-lambda": {
+                    "aws_iam_role": 1,
+                    "aws_s3_object": 1,
+                    "aws_iam_policy": 3,
+                    "data.archive_file": 1,
+                    "aws_lambda_function": 1,
+                    "aws_cloudwatch_log_group": 1,
+                    "data.aws_iam_policy_document": 3,
+                    "aws_iam_role_policy_attachment": 3
+                }
+            },
+            "providers": {
+                "provider[\"registry.terraform.io/hashicorp/aws\"]": {
+                    "aws_vpc": 1,
+                    "aws_subnet": 4,
+                    "aws_kms_key": 2,
+                    "aws_iam_role": 92,
+                    "aws_iam_user": 2,
+                    "aws_kms_grant": 2,
+                    "aws_s3_bucket": 4,
+                    "aws_s3_object": 66,
+                    "aws_sns_topic": 3,
+                    "aws_iam_policy": 242,
+                    "aws_backup_plan": 1,
+                    "aws_route_table": 1,
+                    "data.aws_region": 1,
+                    "aws_backup_vault": 1,
+                    "aws_vpc_endpoint": 2,
+                    "data.aws_subnets": 1,
+                    "aws_s3_bucket_acl": 4,
+                    "aws_ssm_parameter": 1,
+                    "aws_wafv2_web_acl": 1,
+                    "aws_dynamodb_table": 8,
+                    "aws_security_group": 24,
+                    "aws_iam_user_policy": 1,
+                    "aws_lambda_function": 65,
+                    "aws_backup_selection": 1,
+                    "aws_s3_bucket_policy": 1,
+                    "aws_api_gateway_stage": 1,
+                    "aws_lambda_permission": 9,
+                    "aws_sfn_state_machine": 7,
+                    "aws_ram_resource_share": 4,
+                    "aws_scheduler_schedule": 4,
+                    "aws_api_gateway_account": 1,
+                    "aws_dynamodb_table_item": 62,
+                    "aws_security_group_rule": 57,
+                    "data.aws_dynamodb_table": 1,
+                    "aws_api_gateway_rest_api": 1,
+                    "aws_cloudwatch_dashboard": 4,
+                    "aws_cloudwatch_log_group": 66,
+                    "aws_lambda_layer_version": 2,
+                    "aws_s3_bucket_versioning": 2,
+                    "data.aws_caller_identity": 5,
+                    "aws_cloudwatch_event_rule": 7,
+                    "aws_secretsmanager_secret": 6,
+                    "aws_api_gateway_deployment": 2,
+                    "aws_s3_bucket_notification": 1,
+                    "aws_sns_topic_subscription": 1,
+                    "data.aws_lambda_invocation": 1,
+                    "aws_cloudwatch_event_target": 7,
+                    "aws_route53_resolver_config": 1,
+                    "aws_route_table_association": 1,
+                    "aws_ram_resource_association": 1,
+                    "data.aws_ec2_transit_gateway": 1,
+                    "data.aws_iam_policy_document": 336,
+                    "aws_wafv2_web_acl_association": 1,
+                    "aws_iam_role_policy_attachment": 264,
+                    "aws_iam_user_policy_attachment": 2,
+                    "data.aws_route53_resolver_rule": 18,
+                    "aws_api_gateway_method_settings": 1,
+                    "aws_api_gateway_gateway_response": 1,
+                    "data.aws_ec2_managed_prefix_list": 2,
+                    "aws_s3_bucket_public_access_block": 4,
+                    "aws_lambda_layer_version_permission": 1,
+                    "aws_vpc_ipv4_cidr_block_association": 1,
+                    "aws_route53_resolver_rule_association": 18,
+                    "aws_ec2_transit_gateway_vpc_attachment": 1,
+                    "aws_s3_bucket_server_side_encryption_configuration": 4
+                },
+                "provider[\"registry.terraform.io/hashicorp/archive\"]": {
+                    "data.archive_file": 67
+                },
+                "provider[\"registry.terraform.io/hashicorp/template\"]": {
+                    "data.template_file": 80
+                },
+                "module.tfe-token-rotation.provider[\"registry.terraform.io/hashicorp/tfe\"]": {
+                    "data.tfe_workspace": 1
+                }
+            },
+            "resources": [
+                {
+                    "name": "current",
+                    "type": "data.aws_caller_identity",
+                    "count": 1,
+                    "module": "root.apigateway",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "api_assume_document",
+                    "type": "data.aws_iam_policy_document",
+                    "count": 1,
+                    "module": "root.apigateway",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "registration_retry_status_exec_policy_attachment",
+                    "type": "aws_iam_role_policy_attachment",
+                    "count": 1,
+                    "module": "root.apigateway",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "lambda_security_group",
+                    "type": "aws_security_group",
+                    "count": 1,
+                    "module": "root.retry_registration_report_lambda",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "lambda_security_group_rule_1",
+                    "type": "aws_security_group_rule",
+                    "count": 1,
+                    "module": "root.retry_registration_report_lambda",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "task_state_table",
+                    "type": "aws_dynamodb_table",
+                    "count": 1,
+                    "module": "root.task_state_table",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "lambda_function",
+                    "type": "aws_lambda_function",
+                    "count": 1,
+                    "module": "root.validation_lambda.generic_lambda",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                },
+                {
+                    "name": "object",
+                    "type": "aws_s3_object",
+                    "count": 1,
+                    "module": "root.wait_for_user_action_lambda.generic_lambda",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+                    "index-keys": []
+                }
+            ],
+            "resources-processed": true,
+            "serial": 137,
+            "state-version": 4,
+            "terraform-version": "1.3.9"
+        },
+        "relationships": {
+            "run": {
+                "data": {
+                    "id": "run-:id:",
+                    "type": "runs"
+                }
+            },
+            "rollback-state-version": {
+                "data": null
+            },
+            "next-state-version": {
+                "data": null
+            },
+            "previous-state-version": {
+                "data": {
+                    "id": "sv-:id:",
+                    "type": "state-versions"
+                }
+            },
+            "created-by": {
+                "data": {
+                    "id": "user-:id:",
+                    "type": "users"
+                },
+                "links": {
+                    "self": "/api/v2/users/user-:id:",
+                    "related": "/api/v2/runs/run-:id:/created-by"
+                }
+            },
+            "workspace": {
+                "data": {
+                    "id": "ws-:id:",
+                    "type": "workspaces"
+                }
+            },
+            "outputs": {
+                "data": [],
+                "links": {
+                    "related": "/api/v2/state-versions/sv-:id:/outputs"
+                }
+            }
+        },
+        "links": {
+            "self": "/api/v2/state-versions/sv-:id:"
+        }
+    }
+}
