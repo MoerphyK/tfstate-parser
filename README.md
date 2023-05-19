@@ -43,8 +43,8 @@ This class is used to check the compliance of a Terraform state file against a c
 {
     "provider": "hashicorp/aws",
     "resource_type": "aws_s3_bucket",
-    "rule_name": "S3 bucket must have default encryption",
-    "compliance_level": "warning",
+    "description": "S3 bucket must have default encryption",
+    "compliance_level": "check",
     "condition": {
       "operator": "and",
       "rules": [

@@ -13,6 +13,11 @@ rules_table = os.environ['RULES_TABLE']
 service="tfstate-parser-create-rule-table-entry"
 logger = Logger(service=service)
 
+####################
+#### Attributes ####
+####################
+compliance_levels = ['hard_mandatory', 'soft_mandatory', 'check']
+
 ##########################
 #### Helper Functions ####
 ##########################
@@ -29,7 +34,7 @@ def validate_object(record):
                 raise Exception(f"Received record from unexpected bucket: {record['s3']['bucket']['name']}")
 
         # Check if object is a json file
-        if record['s3']['object']['key'].split('.')[-1] != '.json':
+        if record['s3']['object']['key'].split('.')[-1] != 'json':
                 logger.error(f"Received object is not a json file: {record['s3']['object']['key']}")
                 raise Exception(f"Received object is not a json file: {record['s3']['object']['key']}")
 
@@ -60,12 +65,12 @@ def validate_rule_object(rule, object_key):
                         
         # Validate provider
         if rule['provider'].split('/')[-1].upper() != object_key.split('/')[1]:
-                logger.error(f"Rule object does not match s3_key provider: {object_key} & {rule}")
-                raise Exception(f"Rule object does not match s3_key provider: {object_key} & {rule}")
+                logger.error(f"Rule object does not match s3_key provider: {object_key} & {rule['provider'].split('/')[-1].upper()}")
+                raise Exception(f"Rule object does not match s3_key provider: {object_key} & {rule['provider'].split('/')[-1].upper()}")
         # Validate compliance level
-        if rule['compliance_level'] not in ['HARD', 'SOFT', 'CHECK']:
-                logger.error(f"Rule object has invalid compliance level: {rule}")
-                raise Exception(f"Rule object has invalid compliance level: {rule}")
+        if rule['compliance_level'] not in compliance_levels:
+                logger.error(f"Rule object has invalid compliance level: {rule['compliance_level']} must be one of {compliance_levels}")
+                raise Exception(f"Rule object has invalid compliance level: {rule['compliance_level']} must be one of {compliance_levels}")
         # Validate condition
         # TODO: Validate condition
 
@@ -94,7 +99,7 @@ def convert_rule_to_ddb_item(rule, object_key):
         environment = split_object_key[2]
         rule_name = split_object_key[3].split('.')[0]
         item_data = {
-                'Key': {'S': object_key},
+                'S3Key': {'S': object_key},
                 'ResourceType': {'S': rule['resource_type']},
                 'RuleName' : {'S': rule_name},
                 'Description': {'S': rule['description']},
@@ -124,8 +129,8 @@ def create_rule(object_key):
         response = ddb_client.put_item(
                 TableName=rules_table,
                 Item=item,
-                ReturnValues='ALL_NEW')
-        logger.info(f"Created rule: {response}")
+                ReturnValues='ALL_OLD')
+        logger.info(f"DynamoDB response: {response}")
 
 def remove_rule(object_key):
         '''
@@ -133,16 +138,38 @@ def remove_rule(object_key):
         params: object_key - the key of the object that triggered the lambda
         return: None
         '''
-        response = ddb_client.delete_item(
+        logger.info(f'Removing rule for object: {object_key}')
+        query = ddb_client.query(
                 TableName=rules_table,
-                Key={
-                        'Key': {'S': object_key}
+                KeyConditionExpression='S3Key = :partition_value',
+                ExpressionAttributeValues={
+                        ':partition_value': {'S': object_key}
                 },
-                ReturnValues='ALL_OLD')
-        logger.info(f"Deleted rule: {response}")
+                ProjectionExpression='S3Key, ResourceType'
+                )
+
+        # Check if the item was found
+        if 'Items' in query:
+                if len(query['Items']) == 1:
+                        item = query['Items'][0]
+                        response = ddb_client.delete_item(
+                                TableName=rules_table,
+                                Key=item,
+                                ReturnValues='ALL_OLD')
+                elif len(query['Items']) > 1:
+                        logger.error(f"Multiple rules found for object: {object_key}")
+                        raise Exception(f"Multiple rules found for object: {object_key}")
+                else:
+                        logger.error(f"Item not found: {object_key}")
+                        raise Exception(f"Item not found: {object_key}")
+        else:
+                logger.error(f"Item not found: {object_key}")
+                raise Exception(f"Item not found: {object_key}")
+        
+        logger.info(f"DynamoDB response: {response}")
 
 def lambda_handler(event, context):
-        event = event['Records'][0]
+        logger.info(event)
         for record in event['Records']:
                 validate_object(record)
                 

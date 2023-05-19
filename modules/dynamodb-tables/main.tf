@@ -2,11 +2,11 @@ resource "aws_dynamodb_table" "rules_table" {
   name           = "${var.resource_prefix}-rules"
   read_capacity  = 20
   write_capacity = 20
-  hash_key       = "Key"
+  hash_key       = "S3Key"
   range_key      = "ResourceType"
 
   attribute {
-    name = "Key"
+    name = "S3Key"
     type = "S"
   }
 
