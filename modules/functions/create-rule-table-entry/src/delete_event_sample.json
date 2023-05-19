@@ -1,0 +1,36 @@
+{
+    "Records": [
+        {
+            "eventVersion": "2.1",
+            "eventSource": "aws:s3",
+            "awsRegion": "eu-central-1",
+            "eventTime": "2023-05-19T09: 54: 23.270Z",
+            "eventName": "ObjectRemoved:Delete",
+            "userIdentity": {
+                "principalId": "AWS:AIDASW4VLOPCOVKB3QPUZ"
+            },
+            "requestParameters": {
+                "sourceIPAddress": "139.6.79.5"
+            },
+            "responseElements": {
+                "x-amz-request-id": "6WTH8PN5SHGHSJTX",
+                "x-amz-id-2": "3SCBJLB8mVxNbwp+9ZBsVi2JDNtEPyHFzLKPgGr3rD0FDoNr/wNidk3xWeJ00pVZdwTVxkwrAbPoZvvhc3PPYVYb6qZDxgVH"
+            },
+            "s3": {
+                "s3SchemaVersion": "1.0",
+                "configurationId": "96233c91-1479-4123-a75a-6bdb50ac0734",
+                "bucket": {
+                    "name": "tfstate-parser-rules",
+                    "ownerIdentity": {
+                        "principalId": "A2NFX2GICGE636"
+                    },
+                    "arn": "arn:aws:s3:::tfstate-parser-rules"
+                },
+                "object": {
+                    "key": "tfstate-parser.json",
+                    "sequencer": "006467474F423E8084"
+                }
+            }
+        }
+    ]
+}
