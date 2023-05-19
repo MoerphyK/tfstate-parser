@@ -99,7 +99,7 @@ module "rules-to-workspace" {
   ]
   tfe_endpoint  = var.tfe_endpoint
   tfe_token_arn = module.secrets.tfe_token_arn
-  rules_bucket  = module.s3.rules_bucket
+  rules_table   = module.dynamodb.rules_table
 
   resource_prefix = var.resource_prefix
   tags            = var.tags

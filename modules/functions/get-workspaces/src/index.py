@@ -43,17 +43,19 @@ def parse_workspace_infos(workspaces):
         logger.debug(f"Parsing workspaces from {workspaces} response")
         short_workspaces = []
         for workspace in workspaces:
+                # TODO: Verify None is the correct check
+                # Skip workspaces that currently do not have a state
+                if workspace['relationships']['current-state-version']['data'] == None:
+                        continue
                 short_workspace = {}
                 short_workspace['id'] = workspace['id']
                 short_workspace['name'] = workspace['attributes']['name']
                 short_workspace['organization'] = workspace['relationships']['organization']['data']['id']
-                short_workspace['csp'] = short_workspace['name'].split('-')[0]
                 short_workspace['environment'] = short_workspace['name'].split('-')[-1]
-                # TODO: Check if state version id is real
                 short_workspace['state_version'] = workspace['relationships']['current-state-version']['data']['id']
-                # TODO: Get CSP and Environment from workspace tags
-                if 'tags' in workspace['attributes']:
-                        short_workspace['tags'] = workspace['attributes']['tags']
+                # TODO: Get Environment from workspace tags
+                if 'tag-names' in workspace['attributes']:
+                        short_workspace['tags'] = workspace['attributes']['tag-names']
 
                 short_workspaces.append(short_workspace)
         return short_workspaces

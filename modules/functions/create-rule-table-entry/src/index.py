@@ -139,6 +139,7 @@ def remove_rule(object_key):
         return: None
         '''
         logger.info(f'Removing rule for object: {object_key}')
+        # Query the DynamoDB table for sorting key ResourceType -> necessary to delete the item
         query = ddb_client.query(
                 TableName=rules_table,
                 KeyConditionExpression='S3Key = :partition_value',

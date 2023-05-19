@@ -36,7 +36,7 @@ module "generic_lambda" {
   ]
 
   environment = {
-    RULES_BUCKET          = var.rules_bucket,
+    RULES_TABLE           = var.rules_table,
     TFE_TOKEN_CREDENTIALS = var.tfe_token_arn,
     TFE_ENDPOINT          = var.tfe_endpoint
   }

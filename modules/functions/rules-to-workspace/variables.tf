@@ -25,7 +25,7 @@ variable "tfe_endpoint" {
 }
 
 
-variable "rules_bucket" {
+variable "rules_table" {
   type        = string
   description = "Bucket where the rules are stored"
 }
