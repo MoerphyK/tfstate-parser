@@ -132,7 +132,7 @@ def get_resource_types(state_version):
 
         return resource_types
 
-def find_rule_s3_keys(entity, environment, resource_types):
+def find_rule_keys(entity, environment, resource_types):
         '''
         Find the rule s3 keys that match the entity, environment and resource types
         params: entity - entity to find rules for
@@ -183,8 +183,9 @@ def lambda_handler(event, context):
         resource_types = get_resource_types(state_version)
 
         ## Generate S3 Keys based on organization & providers
-        s3_keys = find_rule_s3_keys(workspace, resource_types)
-        if s3_keys != []:
-                workspace['rule_keys'] = s3_keys
-
+        rule_keys = find_rule_keys(workspace, resource_types)
+        if rule_keys == []:
+                return []
+        
+        workspace['rule_keys'] = rule_keys
         return workspace
