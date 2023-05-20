@@ -12,10 +12,6 @@ rules_bucket            = os.environ['RULES_BUCKET']
 tfe_client_secret       = os.environ['TFE_CLIENT_CREDENTIALS']
 tfe_endpoint            = os.environ['TFE_ENDPOINT']
 
-
-# Default timeouts for requests to the puppet api (in seconds)
-default_request_timeout = 15.0
-
 service="tfstate-parser-apply-rules"
 logger = Logger(service=service)
 
