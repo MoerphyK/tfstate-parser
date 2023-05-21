@@ -24,6 +24,10 @@ variable "tfe_endpoint" {
   description = "endpoint for the post /create /update tfe CMDB CI VM instance"
 }
 
+variable "reporting_bucket" {
+  type        = string
+  description = "Bucket where the results are stored"
+}
 
 variable "rules_table" {
   type        = string

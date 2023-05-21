@@ -1,8 +1,7 @@
 import json
 import os
 import requests
-import re
-import operator
+import datetime
 
 # from state_parser import TFState
 from compliance_checker import ComplianceChecker
@@ -12,16 +11,15 @@ import boto3
 from boto3.dynamodb.conditions import Attr
 
 rules_table             = os.environ['RULES_TABLE']
-tfe_client_secret       = os.environ['TFE_CLIENT_CREDENTIALS']
+reporting_bucket        = os.environ['REPORTING_BUCKET']
+tfe_client_secret       = os.environ['TFE_TOKEN_CREDENTIALS']
 tfe_endpoint            = os.environ['TFE_ENDPOINT']
 
 # Init secretsmanager from boto3
-sm_client = boto3.client('secretsmanager')
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table(rules_table)
-
-
-
+sm_client       = boto3.client('secretsmanager')
+s3_client       = boto3.client('s3')
+dynamodb        = boto3.resource('dynamodb')
+table           = dynamodb.Table(rules_table)
 
 # Default timeouts for requests to the puppet api (in seconds)
 default_request_timeout = 15.0
@@ -43,26 +41,6 @@ logger = Logger(service=service)
 #### Helper Functions ####
 ##########################
 
-def get_operator_function(operator_str):
-        '''
-        Returns the operator function for a given operator string.
-        param operator_str: The operator string to get the operator function for.
-        Returns: The operator function.
-        '''
-        operator_map = {
-            'eq': operator.eq,
-            'neq': operator.ne,
-            'contains': operator.contains,
-            'not_contains': lambda a, b: not operator.contains(a, b),
-            'exists': lambda a, b: isinstance(a, str) or bool(a) == b, ## Does not work with NullType
-            'not_exists': lambda a, b: isinstance(a, str) or bool(a) != b, ## Does not work with NullType
-            'matches': lambda a, b: bool(re.match(str(b), str(a))), ## Does not work with dict
-            'not_matches': lambda a, b: not bool(re.match(str(b), str(a))), ## Does not work with dict
-            'and': all, ## Works with list of bools
-            'or': any ## Works with list of bools
-        }
-        return operator_map.get(operator_str)
-
 def slim_providers(full_provider):
         '''
         Extract the provider from the full provider string
@@ -79,7 +57,7 @@ def slim_providers(full_provider):
 
 def slim_resource_types(full_resource_types):
         '''
-        Extract the resource types from the full resource types string
+        Extract the resource types from the resource types : count dictionary
         params: full_resource_types - full resource types string
         returns: resource_types - list of resource types
         '''
@@ -88,30 +66,24 @@ def slim_resource_types(full_resource_types):
                 resource_types.append(resource_type)
         return resource_types
 
-def rearrange_tfstate(tfstate):
-    '''
-    Rearrange the tfstate to be grouped by provider and resource type
-    params: tfstate - tfstate to rearrange
-    returns: rearranged tfstate
-    '''
-    rearranged_dict = {}
-    slimmed_rearranged_dict = {}
+def upload_results_to_s3(results, workspace):
+        # Upload results to S3, while the key is generated from the workspace information
+        logger.info("Uploading results to S3")
+        # Generate current date for the s3 key
+        # TODO: Upload the results as a csv file
+        key = f"{workspace['report_date']}/{workspace['organization']}/{workspace['name']}/results.json"
+        # Upload the results to S3
+        response = s3_client.put_object(
+                Body=json.dumps(results),
+                Bucket=reporting_bucket,
+                Key=key
+        )
 
-    for item in state['resources']:
-        provider = item["provider"]
-        resource_type = item["type"]
-
-        if provider not in rearranged_dict:
-            rearranged_dict[provider] = {}
-
-        if resource_type not in rearranged_dict[provider]:
-            rearranged_dict[provider][resource_type] = []
-
-        rearranged_dict[provider][resource_type].append(item)
-
-    for provider in rearranged_dict:
-        slimmed_rearranged_dict[slim_providers(provider)] = rearranged_dict[provider]
-    return slimmed_rearranged_dict
+        if response['ResponseMetadata']['HTTPStatusCode'] == 200:
+                return key
+        else:
+                logger.error(f"Failed to upload results to S3. Key = {key}")
+                raise Exception(f"Failed to upload results to S3. Key = {key}")
 
 #######################
 #### TFE Functions ####
@@ -262,129 +234,6 @@ def get_rules(entity, environment, resource_types):
                         logger.info(f"Found rules for entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
                         rules = response['Items']
                         return rules
-                
-
-##############################
-#### Compliance Functions ####
-##############################
-
-def get_attribute_value(attributes, key):
-        '''
-        Returns the value of a key in a dictionary.
-        param attributes: The attributes of the resources parsed from the Terraform state file.
-        param key: The key of the resource to search for in the attributes dictionary.
-        Returns: The value of the key in the dictionary.
-        '''
-        keys = key.split('.')
-        value = attributes.get(keys[0])
-
-        for k in keys[1:]:
-            if isinstance(value, list):
-                if k.isdigit() and int(k) < len(value):
-                    value = value[int(k)]
-                else:
-                    value = None
-            elif isinstance(value, dict):
-                value = value.get(k)
-            else:
-                value = None
-            if value is None:
-                break
-
-        return value
-
-def check_rule(rule, attributes):
-        '''
-        Checks if a rule is valid.
-        param rule: The rule to check.
-        param attributes: The attributes of the resources parsed from the Terraform state file.
-        Returns: A tuple containing a boolean indicating if the rule is valid and a string containing the error message if the rule is invalid.
-        '''
-        logger.info(f'## Called check_rule ##\n# Attributes:\n{attributes}\n# Rule:\n{rule}')
-        # Extract infos from rule
-        operator_str = rule.get('operator', '')
-        key = rule.get('key', '')
-        value = rule.get('value')
-
-        # Get operator
-        operator_fn = get_operator_function(operator_str)
-        logger.info(f'check_rule - operator: {operator_str}')
-        # Check rule inputs validity
-        if not key or not operator_str:
-            return False, 'Invalid rule'
-
-        actual_value = get_attribute_value(attributes, key)
-
-        if operator_fn is None:
-            return False, f'Invalid operator: {operator_str}'
-        elif actual_value == None and operator_str == 'contains':
-            return False, "Key can't be found in resource attributes."
-        elif actual_value == None and operator_str == 'not_contains':
-            return True, "Key can't be found in resource attributes."
-
-        return operator_fn(actual_value, value),''
-
-def check_condition(attributes, condition):
-        '''
-        Checks if a condition is valid.
-        param condition: The condition to check.
-        param attributes: The attributes of the resources parsed from the Terraform state file.
-        Returns: A tuple containing a boolean indicating if the condition is valid and a string containing the error message if the condition is invalid.
-        '''
-        logger.info(f'## Called check_condition ##\n# Attributes:\n{attributes}\n# Condition:\n{condition}')
-        operator_fn = None
-
-        for key, value in condition.items():
-            if key == 'operator':
-                operator_fn = get_operator_function(value)
-                logger.info(f'check_condition - operator: {value}')
-            elif key == 'rules':
-                rules = value
-
-        if operator_fn is None:
-            return False, 'Invalid operator'
-
-        rule_results = []
-        for rule in rules:
-            result,_ = check_rule(rule,attributes)
-            rule_results.append(result)
-
-        logger.info(f'check_condition - results: {rule_results}')
-        return operator_fn(rule_results), ''
-
-
-def check_compliance(state_resources, rule):
-        '''
-        Checks if a Terraform state file is compliant with a compliance file.
-        param state_resources: The pre sorted resources from the Terraform state.
-        param rule: The rule.
-        Returns: A dictionary containing the compliance result.
-        '''
-        results = []
-        provider = rule['Provider']
-        resource_type = rule['ResourceType']
-        condition = json.loads(rule['Rule'])
-        resources = state_resources[provider][resource_type]
-
-        for resource in resources:
-                ## Check if there are multiple instances of the resource, in case of count or for_each
-                for instance in resource['instances']:
-                        attributes = resource['attributes']
-                        is_compliant, reason = check_condition(attributes, condition)
-
-                        result = {
-                                'rule_name': rule['RuleName'],
-                                'description': rule['Description'],
-                                'compliance_level': rule['ComplianceLevel'],
-                                'provider': provider,
-                                'resource_type': resource_type,
-                                'resource_id': attributes.get('id', 'no id found'),
-                                'compliance_status': is_compliant,
-                                'reason': reason
-                        }
-                results.append(result)
-        ## TODO: Add second return value to indicate if there are any non compliant results
-        return results
 
 def lambda_handler(event, context):
         '''
@@ -413,11 +262,14 @@ def lambda_handler(event, context):
                 return results
         else:
                 tf_state = get_tf_state(workspace['state_download_url'])
-                sorted_state = rearrange_tfstate(tf_state)
+                cc = ComplianceChecker()
+                sorted_state = cc.rearrange_tfstate(tf_state)
                 for rule in rules:
                         logger.info(f"Apply rule {rule['S3Key']} for entity {rule['Entity']}, environment {rule['Environment']}, provider {rule['Provider']} and resource type {rule['ResourceType']}")
-                        results.append(check_compliance(rule, sorted_state))
+                        results.append(cc.check_compliance(rule, sorted_state))
         # TODO: Check if the compliance check is working, if so outsource the methods to a separate file
         # TODO: Format the results to be converted more easily
         # TODO: Upload the results to S3
+        result_s3_key = upload_results_to_s3(results, workspace)
+
         return results

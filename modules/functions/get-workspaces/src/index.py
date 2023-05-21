@@ -7,7 +7,7 @@ import requests
 # Init secretsmanager from boto3
 sm_client = boto3.client('secretsmanager')
 
-tfe_client_secret       = os.environ['TFE_CLIENT_CREDENTIALS']
+tfe_client_secret       = os.environ['TFE_TOKEN_CREDENTIALS']
 tfe_endpoint            = os.environ['TFE_ENDPOINT']
 
 # Default timeouts for requests to the puppet api (in seconds)
@@ -31,7 +31,7 @@ def get_tfe_token():
                 logger.error("Failed to get TFE token from Secrets Manager")
                 raise Exception("Failed to get TFE token from Secrets Manager")
         
-def parse_workspace_infos(workspaces):
+def parse_workspace_infos(workspaces, date):
         '''
         Parse the workspaces from the Terraform Enterprise API response
         into a list of dictionaries with the following attributes:
@@ -56,6 +56,7 @@ def parse_workspace_infos(workspaces):
                 # TODO: Get Environment from workspace tags
                 if 'tag-names' in workspace['attributes']:
                         short_workspace['tags'] = workspace['attributes']['tag-names']
+                short_workspace['report_date'] = date
 
                 short_workspaces.append(short_workspace)
         return short_workspaces
@@ -78,7 +79,7 @@ def get_workspaces(org_id):
         if response.status_code == 200:
                 logger.info(f"Status Code: {response.status_code}\nSuccessfully got all workspaces from {org_id}")
                 r = json.loads(response.text)
-                return parse_workspace_infos(r['data'])
+                return r['data']
         else:
                 logger.error(f"Failed to get all workspace from Terraform Enterprise organization '{org_id}'")
                 raise Exception(f"Status Code: {response.status_code}\nError: {json.loads(response.text)}")
@@ -89,5 +90,7 @@ def lambda_handler(event, context):
         Retrieve all workspaces from the current organization
         '''
         logger.info("Retrieving all workspaces from the current organization")
-        org_id = event['organization']
-        return get_workspaces(org_id)
+        organization = event['organization']
+        workspaces = get_workspaces(organization)
+        filtered_workspaces = parse_workspace_infos(workspaces, event['date'])
+        return filtered_workspaces

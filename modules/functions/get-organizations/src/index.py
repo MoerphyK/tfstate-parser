@@ -3,13 +3,14 @@ import boto3
 import json
 import os
 import requests
+import datetime
 
 # Init secretsmanager from boto3
 sm_client = boto3.client('secretsmanager')
 
-tfe_client_secret       = os.environ['TFE_CLIENT_CREDENTIALS']
+tfe_client_secret       = os.environ['TFE_TOKEN_CREDENTIALS']
 tfe_endpoint            = os.environ['TFE_ENDPOINT']
-
+current_date            = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
 # Default timeouts for requests to the puppet api (in seconds)
 default_request_timeout = 15.0
@@ -82,4 +83,9 @@ def lambda_handler(event, context):
         else:
                 ## If no organizations has been passed, get all organizations
                 orgas = get_organizations()
-        return orgas
+        
+        ## Create a list of dictionaries with the organization name and the current date for the mapstate
+        org_dict = []
+        for org in orgas:
+                org_dict.append({'organization':org, 'date': current_date})
+        return org_dict
