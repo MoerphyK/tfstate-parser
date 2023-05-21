@@ -1,5 +1,5 @@
 locals {
-  sfn_name = "${var.resource_prefix}-sfn-create-registration"
+  sfn_name = "${var.resource_prefix}-${var.sfn_name}"
 }
 
 data "template_file" "sfn" {

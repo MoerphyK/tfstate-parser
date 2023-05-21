@@ -45,8 +45,6 @@ module "stepfunction" {
     get-organizations  = module.get-organizations.lambda_arn
     get-workspaces     = module.get-workspaces.lambda_arn
     rules-to-workspace = module.rules-to-workspace.lambda_arn
-    apply-rules        = module.apply-rules.lambda_arn
-    create-report      = module.create-report.lambda_arn
   }
 
   resource_prefix = var.resource_prefix
@@ -97,24 +95,10 @@ module "rules-to-workspace" {
   layers = [
     module.default-layer.layer_arn
   ]
-  tfe_endpoint  = var.tfe_endpoint
-  tfe_token_arn = module.secrets.tfe_token_arn
-  rules_table   = module.dynamodb.rules_table
+  tfe_endpoint     = var.tfe_endpoint
+  tfe_token_arn    = module.secrets.tfe_token_arn
+  rules_table      = module.dynamodb.rules_table
   reporting_bucket = module.s3.reporting_bucket
-
-  resource_prefix = var.resource_prefix
-  tags            = var.tags
-}
-
-module "apply-rules" {
-  source           = "./modules/functions/apply-rules"
-  s3_source_bucket = module.s3.lambda_source_bucket
-  layers = [
-    module.default-layer.layer_arn
-  ]
-  tfe_endpoint  = var.tfe_endpoint
-  tfe_token_arn = module.secrets.tfe_token_arn
-  rules_bucket  = module.s3.rules_bucket
 
   resource_prefix = var.resource_prefix
   tags            = var.tags
@@ -140,6 +124,20 @@ module "create-rule-table-entry" {
   ]
   rules_bucket = module.s3.rules_bucket
   rules_table  = module.dynamodb.rules_table
+
+  resource_prefix = var.resource_prefix
+  tags            = var.tags
+}
+
+##############
+#### MISC ####
+##############
+
+module "eventbridge" {
+  source                    = "./modules/eventbridge"
+  compliance_sfn_arn        = module.stepfunction.sfn_arn
+  create_report_lambda_arn  = module.create-report.lambda_arn
+  create_report_lambda_name = module.create-report.lambda_name
 
   resource_prefix = var.resource_prefix
   tags            = var.tags

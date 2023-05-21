@@ -267,9 +267,8 @@ def lambda_handler(event, context):
                 for rule in rules:
                         logger.info(f"Apply rule {rule['S3Key']} for entity {rule['Entity']}, environment {rule['Environment']}, provider {rule['Provider']} and resource type {rule['ResourceType']}")
                         results.append(cc.check_compliance(rule, sorted_state))
-        # TODO: Check if the compliance check is working, if so outsource the methods to a separate file
+        # TODO: Check if the compliance check is working
         # TODO: Format the results to be converted more easily
-        # TODO: Upload the results to S3
         result_s3_key = upload_results_to_s3(results, workspace)
 
-        return results
+        return result_s3_key

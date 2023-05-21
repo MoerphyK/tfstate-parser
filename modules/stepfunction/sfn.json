@@ -47,32 +47,6 @@
                       "FunctionName": "${rules-to-workspace}"
                     },
 
-                    "Next": "Rules Found"
-                  },
-                  "Rules Found": {
-                    "Type": "Choice",
-                    "Choices": [
-                      {
-                        "Not": {
-                          "Variable": "$.rule_keys",
-                          "IsPresent": true
-                        },
-                        "Next": "No Rules apply"
-                      }
-                    ],
-                    "Default": "Apply Rules"
-                  },
-                  "No Rules apply": {
-                    "Type": "Succeed"
-                  },
-                  "Apply Rules": {
-                    "Type": "Task",
-                    "Resource": "arn:aws:states:::lambda:invoke",
-                    "OutputPath": "$.Payload",
-                    "Parameters": {
-                      "Payload.$": "$",
-                      "FunctionName": "${apply-rules}"
-                    },
                     "End": true
                   }
                 }
@@ -81,17 +55,6 @@
             }
           }
         },
-        "Next": "Create Report"
-      },
-      "Create Report": {
-        "Type": "Task",
-        "Resource": "arn:aws:states:::lambda:invoke",
-        "OutputPath": "$.Payload",
-        "Parameters": {
-          "Payload.$": "$",
-          "FunctionName": "${create-report}"
-        },
-
         "End": true
       }
     }
