@@ -55,7 +55,7 @@ def slim_providers(full_provider):
         provider = full_provider[start_index:end_index].split('/')[-1].upper()
         return provider
 
-def slim_resource_types(full_resource_types):
+def slim_down_resource_types(full_resource_types):
         '''
         Extract the resource types from the resource types : count dictionary
         params: full_resource_types - full resource types string
@@ -168,7 +168,7 @@ def get_resource_types(state_version):
         else:
                 for provider in providers:
                         slim_provider = slim_providers(provider)
-                        slim_resource_types = slim_resource_types(providers[provider])
+                        slim_resource_types = slim_down_resource_types(providers[provider])
                         resource_types[slim_provider] = slim_resource_types
 
         ## Output format
@@ -209,7 +209,7 @@ def get_resource_types(state_version):
 
 #         return filtered_rule_keys
 
-def get_rules(entity, environment, resource_types):
+def get_rules(workspace, resource_types):
         '''
         Find the rule s3 keys that match the entity, environment and resource types
         params: entity - entity to find rules for
@@ -217,15 +217,20 @@ def get_rules(entity, environment, resource_types):
                 resource_types - dict of providers and resource types
         returns: rules - list of rule items
         '''
+        entity = workspace['entity']
+        environment = workspace['environment']
+
         # For each provider, get the resource types and find the rules
         for provider in resource_types:
                 # Get the rule s3 keys that match the entity, environment, provider and resource types
+                ## TODO:: Add second scan for entity and environment
                 response = table.scan(
-                FilterExpression=
-                        Attr('Entity').eq('ALL') &
-                        Attr('Environment').eq('ALL') &
-                        Attr('Provider').eq('AWS') &
-                        Attr('ResourceType').is_in(resource_types[provider])
+                        FilterExpression = (
+                                (Attr('Entity').eq('ALL') | Attr('Entity').eq(entity.upper())) &
+                                (Attr('Environment').eq('ALL') | Attr('Environment').eq(environment.upper())) &
+                                Attr('Provider').eq(provider) &
+                                Attr('ResourceType').is_in(resource_types[provider])
+                        )
                 )
                 if 'Items' not in response:
                         logger.info(f"No rules found for entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
@@ -267,7 +272,6 @@ def lambda_handler(event, context):
                 for rule in rules:
                         logger.info(f"Apply rule {rule['S3Key']} for entity {rule['Entity']}, environment {rule['Environment']}, provider {rule['Provider']} and resource type {rule['ResourceType']}")
                         results.append(cc.check_compliance(rule, sorted_state))
-        # TODO: Check if the compliance check is working
         # TODO: Format the results to be converted more easily
         result_s3_key = upload_results_to_s3(results, workspace)
 

@@ -25,13 +25,14 @@ class ComplianceChecker:
     #### Compliance Checker ####
     ############################
 
-    def check_compliance(self, state_resources, rule):
+    def check_compliance(self, rule, state_resources):
             '''
             Checks if a Terraform state file is compliant with a compliance file.
             param state_resources: The pre sorted resources from the Terraform state.
             param rule: The rule.
             Returns: A dictionary containing the compliance result.
             '''
+            logger.info(f'Rule: {rule}\n\nState Resources: {state_resources}')
             results = []
             provider = rule['Provider']
             resource_type = rule['ResourceType']

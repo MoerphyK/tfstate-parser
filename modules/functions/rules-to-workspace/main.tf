@@ -1,3 +1,6 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 data "aws_iam_policy_document" "lambda_secret_access_policy_document" {
   statement {
     actions = [
@@ -18,6 +21,16 @@ data "aws_iam_policy_document" "s3_reporting_access_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "ddb_rules_access_policy_document" {
+  statement {
+    actions = [
+      "dynamodb:*"
+    ]
+
+    resources = ["arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.rules_table}"]
+  }
+}
+
 module "generic_lambda" {
   source           = "../generic-lambda"
   function_name    = "${var.resource_prefix}-${var.function_name}"
@@ -32,6 +45,10 @@ module "generic_lambda" {
     {
       "name" = "rules-s3-access"
       "json" = data.aws_iam_policy_document.s3_reporting_access_policy_document.json
+    },
+    {
+      "name" = "rules-ddb-access"
+      "json" = data.aws_iam_policy_document.ddb_rules_access_policy_document.json
     }
   ]
 

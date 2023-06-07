@@ -16,6 +16,10 @@ default_request_timeout = 15.0
 service="tfstate-parser-get-workspaces"
 logger = Logger(service=service)
 
+##########################
+#### Helper Functions ####
+##########################
+
 def get_tfe_token():
         '''
         Get the TFE token from Secrets Manager
@@ -31,6 +35,22 @@ def get_tfe_token():
                 logger.error("Failed to get TFE token from Secrets Manager")
                 raise Exception("Failed to get TFE token from Secrets Manager")
         
+def check_workspace_tags(workspace):
+        '''
+        Check if the workspace has the correct tags
+        params: workspace (dict)
+        return value: environment (string)
+        '''
+        if 'tag-names' in workspace['attributes']:
+                logger.info(f"Workspace '{workspace['attributes']['name']}' has tags {workspace['attributes']['tag-names']}")
+                tags = workspace['attributes']['tag-names']
+                for tag in tags:
+                        if tag.startswith('environment:'):
+                                logger.debug(f"Found environment tag {tag}")
+                                return tag.split(':')[1]
+        logger.error(f"Failed to find environment tag in {tags}")
+        return None
+
 def parse_workspace_infos(workspaces, date):
         '''
         Parse the workspaces from the Terraform Enterprise API response
@@ -44,18 +64,26 @@ def parse_workspace_infos(workspaces, date):
         short_workspaces = []
         for workspace in workspaces:
                 # TODO: Verify None is the correct check
-                # Skip workspaces that currently do not have a state
+                short_workspace = {}
+                 # Skip workspaces that currently do not have a state
                 if workspace['relationships']['current-state-version']['data'] == None:
                         continue
-                short_workspace = {}
+
                 short_workspace['id'] = workspace['id']
                 short_workspace['name'] = workspace['attributes']['name']
                 short_workspace['organization'] = workspace['relationships']['organization']['data']['id']
-                short_workspace['environment'] = short_workspace['name'].split('-')[-1]
+                short_workspace['entity'] = short_workspace['name'].split('-')[0]
                 short_workspace['state_version'] = workspace['relationships']['current-state-version']['data']['id']
-                # TODO: Get Environment from workspace tags
-                if 'tag-names' in workspace['attributes']:
-                        short_workspace['tags'] = workspace['attributes']['tag-names']
+
+                # Skip workspaces that have not the correct tags
+                # short_workspace['environment'] = short_workspace['name'].split('-')[-1] // way to get environemnt from workspace name
+                environment = check_workspace_tags(workspace)
+                if environment != None:
+                        short_workspace['environment'] = environment
+                else:
+                        logger.error(f"Workspace '{short_workspace['name']}' does not have any tags")
+                        continue
+
                 short_workspace['report_date'] = date
 
                 short_workspaces.append(short_workspace)
