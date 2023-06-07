@@ -1,5 +1,10 @@
 terraform {
-  backend "s3" {
+  cloud {
+    organization = "AXA-GroupOperations"
+
+    workspaces {
+      name = "SP-Compliance-Checker"
+    }
   }
 
   required_providers {
