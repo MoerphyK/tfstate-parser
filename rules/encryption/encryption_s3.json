@@ -1,0 +1,29 @@
+{
+    "provider": "hashicorp/aws",
+    "resource_type": "aws_s3_bucket",
+    "description": "S3 bucket must have default encryption",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "or",
+      "rules": [
+        {
+          "key": "server_side_encryption_configuration",
+          "operator": "exists",
+          "value": true
+        },
+        {
+          "key": "server_side_encryption_configuration.0.rule",
+          "operator": "contains",
+          "value": {
+            "apply_server_side_encryption_by_default": [
+              {
+                "kms_master_key_id": "",
+                "sse_algorithm": "AES256"
+              }
+            ],
+            "bucket_key_enabled": false
+          }
+        }
+      ]
+    }
+  }  

@@ -1,0 +1,16 @@
+{
+    "provider": "hashicorp/aws",
+    "resource_type": "aws_iam_policy",
+    "description": "IAM policy should not allow all actions on all resources",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "or",
+      "rules": [
+        {
+          "key": "policy",
+          "operator": "not_contains",
+          "value":  "\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\""
+        }
+      ]
+    }
+  }  

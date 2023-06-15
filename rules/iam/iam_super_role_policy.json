@@ -1,0 +1,21 @@
+{
+    "provider": "hashicorp/aws",
+    "resource_type": "aws_iam_policy",
+    "description": "IAM policy should not allow policy attachements on all IAM resources",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "nand",
+      "rules": [
+        {
+          "key": "policy",
+          "operator": "contains",
+          "value":  "iam:AttachRolePolicy"
+        },
+        {
+            "key": "policy",
+            "operator": "contains",
+            "value":  "\"Resource\":\"*\""
+          }
+      ]
+    }
+  }  

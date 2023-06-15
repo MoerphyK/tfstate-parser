@@ -1,0 +1,16 @@
+{
+    "provider": "hashicorp/aws",
+    "resource_type": "aws_db_instance",
+    "description": "RDS database must have at least default encryption",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "or",
+      "rules": [
+        {
+          "key": "storage_encrypted",
+          "operator": "matches",
+          "value": true
+        }
+      ]
+    }
+  }  

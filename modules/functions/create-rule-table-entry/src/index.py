@@ -17,6 +17,7 @@ logger = Logger(service=service)
 #### Attributes ####
 ####################
 compliance_levels = ['hard_mandatory', 'soft_mandatory', 'check']
+rule_structure = ['provider', 'resource_type', 'description', 'compliance_level', 'condition']
 
 ##########################
 #### Helper Functions ####
@@ -52,9 +53,10 @@ def validate_rule_object(rule, object_key):
         return: None
         '''
         # Check if rule has the correct structure
-        if 'provider' not in rule or 'resource_type' not in rule or 'description' not in rule or 'compliance_level' not in rule or 'condition' not in rule:
-                logger.error(f"Rule object is missing required fields: {rule}")
-                raise Exception(f"Rule object is missing required fields: {rule}")                
+        for key in rule_structure:
+                if key not in rule:
+                        logger.error(f"Rule object is missing required fields: {key}")
+                        raise Exception(f"Rule object is missing required fields: {key}")              
         if 'rules' not in rule['condition']:
                 logger.error(f"Rule object is missing required fields: {rule}")
                 raise Exception(f"Rule object is missing required fields: {rule}")

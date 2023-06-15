@@ -1,0 +1,16 @@
+{
+    "provider": "hashicorp/aws",
+    "resource_type": "aws_security_group",
+    "description": "Open Ingress from all IPs to any port",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "and",
+      "rules": [
+        {
+          "key": "ingress",
+          "operator": "not_contains",
+          "value": "0.0.0.0/0"
+        }
+      ]
+    }
+  }  

@@ -177,7 +177,9 @@ class ComplianceChecker:
                 'matches': lambda a, b: bool(re.match(str(b), str(a))), ## Does not work with dict
                 'not_matches': lambda a, b: not bool(re.match(str(b), str(a))), ## Does not work with dict
                 'and': all, ## Works with list of bools
-                'or': any ## Works with list of bools
+                'nand': lambda iterable: not all(iterable), ## Works with list of bools
+                'or': any, ## Works with list of bools
+                'nor': lambda iterable: not any(iterable) ## Works with list of bools
             }
             return operator_map.get(operator_str)
 

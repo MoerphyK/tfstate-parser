@@ -1,0 +1,21 @@
+{
+    "provider": "hashicorp/aws",
+    "resource_type": "aws_security_group",
+    "description": "Open Ingress from all IPs to SSH port",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "nand",
+      "rules": [
+        {
+          "key": "ingress",
+          "operator": "not_contains",
+          "value": "0.0.0.0/0"
+        },
+        {
+            "key": "ingress",
+            "operator": "not_contains",
+            "value": "\"to_port\": 22"
+        }
+      ]
+    }
+  }  
