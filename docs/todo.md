@@ -21,3 +21,7 @@
 - Deploy Stepfunction in TFC
 - Test & verify rule ingestion logic
 - Verify rule application logic
+
+### 15.06.2023
+- Create more rules
+-- AWS IAM & Lambda rule

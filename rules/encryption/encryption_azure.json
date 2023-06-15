@@ -1,0 +1,16 @@
+{
+    "provider": "hashicorp/azurerm",
+    "resource_type": "azurerm_storage_account",
+    "description": "Azure Storage Account must have default encryption",
+    "compliance_level": "soft_mandatory",
+    "condition": {
+      "operator": "or",
+      "rules": [
+        {
+          "key": "encryption_enabled",
+          "operator": "matches",
+          "value": true
+        }
+      ]
+    }
+  }  
