@@ -1,0 +1,70 @@
+[
+    [
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/dummy-marvin-attach-detach-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/dummy-marvin-full-access-policy",
+            "compliance_status": false,
+            "reason": ""
+        }
+    ],
+    [
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/dummy-marvin-attach-detach-policy",
+            "compliance_status": false,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/dummy-marvin-full-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        }
+    ],
+    [
+        {
+            "rule_name": "s3_encryption_rule",
+            "description": "S3 bucket must have default encryption",
+            "compliance_level": "check",
+            "provider": "AWS",
+            "resource_type": "aws_s3_bucket",
+            "resource_id": "dummy-marvin-s3-bucket",
+            "compliance_status": true,
+            "reason": ""
+        }
+    ],
+    [
+        {
+            "rule_name": "encryption_rds",
+            "description": "RDS database must have at least default encryption",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_db_instance",
+            "resource_id": "db-BJZTX6HNTC5L4QWLN4V2HPM6CQ",
+            "compliance_status": false,
+            "reason": ""
+        }
+    ]
+]

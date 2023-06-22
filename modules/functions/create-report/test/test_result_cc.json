@@ -1,0 +1,158 @@
+[
+    [
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-create-report-report-s3-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-create-rule-table-entry-rules-s3-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-get-organizations-secrets-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-get-workspaces-secrets-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-rules-to-workspace-secrets-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_access_all",
+            "description": "IAM policy should not allow all actions on all resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-compliance-checker-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        }
+    ],
+    [
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-create-report-report-s3-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-create-rule-table-entry-rules-s3-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-get-organizations-secrets-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-get-workspaces-secrets-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-rules-to-workspace-secrets-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "iam_super_user_policy",
+            "description": "IAM policy should not allow policy attachements on all IAM resources",
+            "compliance_level": "soft_mandatory",
+            "provider": "AWS",
+            "resource_type": "aws_iam_policy",
+            "resource_id": "arn:aws:iam::186607432644:policy/tfstate-parser-compliance-checker-access-policy",
+            "compliance_status": true,
+            "reason": ""
+        }
+    ],
+    [
+        {
+            "rule_name": "s3_encryption_rule",
+            "description": "S3 bucket must have default encryption",
+            "compliance_level": "check",
+            "provider": "AWS",
+            "resource_type": "aws_s3_bucket",
+            "resource_id": "tfstate-parser-lambda-source-packages",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "s3_encryption_rule",
+            "description": "S3 bucket must have default encryption",
+            "compliance_level": "check",
+            "provider": "AWS",
+            "resource_type": "aws_s3_bucket",
+            "resource_id": "tfstate-parser-reports",
+            "compliance_status": true,
+            "reason": ""
+        },
+        {
+            "rule_name": "s3_encryption_rule",
+            "description": "S3 bucket must have default encryption",
+            "compliance_level": "check",
+            "provider": "AWS",
+            "resource_type": "aws_s3_bucket",
+            "resource_id": "tfstate-parser-rules",
+            "compliance_status": true,
+            "reason": ""
+        }
+    ]
+]
