@@ -1,6 +1,8 @@
+# Data sources to get the current region and account ID
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
+# Create a policy to allow the Lambda function to access the S3 bucket
 data "aws_iam_policy_document" "s3_rules_access_policy_document" {
   statement {
     actions = [
@@ -11,6 +13,7 @@ data "aws_iam_policy_document" "s3_rules_access_policy_document" {
   }
 }
 
+# Create a policy to allow the Lambda function to access the DynamoDB table
 data "aws_iam_policy_document" "ddb_rules_access_policy_document" {
   statement {
     actions = [
@@ -21,6 +24,7 @@ data "aws_iam_policy_document" "ddb_rules_access_policy_document" {
   }
 }
 
+# Create the Lambda function
 module "generic_lambda" {
   source           = "../generic-lambda"
   function_name    = "${var.resource_prefix}-${var.function_name}"

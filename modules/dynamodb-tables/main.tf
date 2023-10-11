@@ -1,3 +1,4 @@
+# Create a DynamoDB table for the rules
 resource "aws_dynamodb_table" "rules_table" {
   name           = "${var.resource_prefix}-rules"
   read_capacity  = 20

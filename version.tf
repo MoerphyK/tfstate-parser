@@ -1,12 +1,4 @@
 terraform {
-  cloud {
-    organization = "AXA-GroupOperations"
-
-    workspaces {
-      name = "SP-Compliance-Checker"
-    }
-  }
-
   required_providers {
     aws = {
       source  = "hashicorp/aws"

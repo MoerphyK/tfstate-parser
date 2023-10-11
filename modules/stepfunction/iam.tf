@@ -1,3 +1,4 @@
+# Create the IAM policies for the step function
 data "aws_iam_policy_document" "sfn_access_policy_document" {
   statement {
     effect    = "Allow"
@@ -17,6 +18,7 @@ data "aws_iam_policy_document" "sfn_assume_role_policy_document" {
   }
 }
 
+# Create the IAM role for the step function
 resource "aws_iam_role" "sfn_execution_role" {
   name               = "${local.sfn_name}-execution-role"
   assume_role_policy = data.aws_iam_policy_document.sfn_assume_role_policy_document.json
@@ -24,6 +26,7 @@ resource "aws_iam_role" "sfn_execution_role" {
   tags               = var.tags
 }
 
+# Create the IAM policy for the step function
 resource "aws_iam_policy" "sfn_access_policy" {
   name        = "${local.sfn_name}-access-policy"
   path        = "/"
@@ -32,6 +35,7 @@ resource "aws_iam_policy" "sfn_access_policy" {
   tags        = var.tags
 }
 
+# Attach the IAM policy to the IAM role
 resource "aws_iam_role_policy_attachment" "attach_sfn_access_policy" {
   role       = aws_iam_role.sfn_execution_role.name
   policy_arn = aws_iam_policy.sfn_access_policy.arn

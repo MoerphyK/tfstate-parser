@@ -104,30 +104,30 @@ def get_tfe_token():
                 logger.error("Failed to get TFE token from Secrets Manager")
                 raise Exception("Failed to get TFE token from Secrets Manager")
 
-def get_state_version(state_id):
+def get_state_version(state_version_id):
         '''
         Useful documentation:
                 https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions#show-a-state-version
                         GET  https://app.terraform.io/api/v2/state-versions/<state_id>
         Get the state version from Terraform Enterprise
-        params: state_id - id of the state version to retrieve
+        params: state_version_id - id of the state version to retrieve
         returns: state version
         '''
 
-        logger.info(f"Checking state version {state_id} for providers")
+        logger.info(f"Checking state version {state_version_id} for providers")
         headers = {
                 "authorization": "Bearer " + get_tfe_token(),
                 "content-type": "application/vnd.api+json"
         }
-        url = tfe_endpoint + f"/state-versions/{state_id}"
+        url = tfe_endpoint + f"/state-versions/{state_version_id}"
         response = requests.get(url, headers=headers, timeout=default_request_timeout)
         if response.status_code == 200:
-                logger.info(f"Successfully got state version {state_id}")
+                logger.info(f"Successfully got state version {state_version_id}")
                 return json.loads(response.text)['data']
         
         else:
-                logger.error(f"Failed to get state version {state_id}")
-                raise Exception(f"Failed to get state version {state_id}")
+                logger.error(f"Failed to get state version {state_version_id}")
+                raise Exception(f"Failed to get state version {state_version_id}")
 
 def get_tf_state(state_download_url):
         '''
@@ -219,11 +219,9 @@ def get_rules(workspace, resource_types):
         '''
         entity = workspace['entity']
         environment = workspace['environment']
-
+        rules = []
         # For each provider, get the resource types and find the rules
         for provider in resource_types:
-                # Get the rule s3 keys that match the entity, environment, provider and resource types
-                ## TODO:: Add second scan for entity and environment
                 response = table.scan(
                         FilterExpression = (
                                 (Attr('Entity').eq('ALL') | Attr('Entity').eq(entity.upper())) &
@@ -233,12 +231,12 @@ def get_rules(workspace, resource_types):
                         )
                 )
                 if 'Items' not in response:
-                        logger.info(f"No rules found for entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
+                        logger.info(f"No rules found with filter: entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
                         continue
                 else:
-                        logger.info(f"Found rules for entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
-                        rules = response['Items']
-                        return rules
+                        logger.info(f"Found rules for filter: entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
+                        rules.extend(response['Items'])
+        return rules
 
 def lambda_handler(event, context):
         '''
@@ -248,25 +246,22 @@ def lambda_handler(event, context):
         '''
         workspace = event
         
-        ## Load state version from Terraform Enterprise API
+        ## Load state version from Terraform Enterprise API and extract proivder names and resource types
         state_version = get_state_version(workspace['state_version'])
-        
-        ## Store state download url
-        # TODO: Check which download URL is more useful
-        # "hosted-state-download-url": "downloadurl"
-        # "hosted-json-state-download-url": "downloadurl"
-        workspace['state_download_url'] = state_version['attributes']['hosted-state-download-url']
-
-        ## Extract provider names and resource types from state version
         resource_types = get_resource_types(state_version)
 
-        ## Find rules for entity, environment and resource types
+        ## Find rules that match the entity, environment and resource types of the workspaces terraform state
         rules = get_rules(workspace, resource_types)
+
+        ## If no matching rules are found end the execution
         results = []
         if rules == []:
+                logger.info(f'No rules found for the workspace have been found. Workspace is compliant.')
                 return results
+        ## If matching rules are found, download the tfstate and check it with the rules
         else:
-                tf_state = get_tf_state(workspace['state_download_url'])
+                logger.info(f'Found rules that apply to the workspace. {rules}')
+                tf_state = get_tf_state(state_version['attributes']['hosted-state-download-url'])
                 cc = ComplianceChecker()
                 sorted_state = cc.rearrange_tfstate(tf_state)
                 for rule in rules:
@@ -276,3 +271,5 @@ def lambda_handler(event, context):
         result_s3_key = upload_results_to_s3(results, workspace)
 
         return result_s3_key
+
+## TODO:: Rule in AGO S3 key did not apply to workspace from AGO organization

@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+# Create a zip file of the default libraries
 data "archive_file" "zip_file" {
   type        = "zip"
   source_dir  = "${path.module}/src"
@@ -15,6 +16,7 @@ data "archive_file" "zip_file" {
   output_file_mode = "0666"
 }
 
+# Upload the zip file to S3
 resource "aws_s3_object" "object" {
   bucket = var.s3_source_bucket
   key    = "src/layer/default/package-${data.archive_file.zip_file.output_md5}.zip"
@@ -30,6 +32,7 @@ resource "aws_s3_object" "object" {
   }
 }
 
+# Create a lambda layer from the uploaded zip file
 resource "aws_lambda_layer_version" "lambda_layer" {
   compatible_architectures = ["x86_64"]
   s3_bucket                = var.s3_source_bucket

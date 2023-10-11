@@ -1,8 +1,10 @@
+# Creates the S3 bucket for the rules
 resource "aws_s3_bucket" "rules_bucket" {
   bucket = "${var.resource_prefix}-rules"
   tags   = var.tags
 }
 
+# Configure bucket to block public access
 resource "aws_s3_bucket_public_access_block" "rules_bucket_access_block" {
   bucket = aws_s3_bucket.rules_bucket.id
 
@@ -12,11 +14,7 @@ resource "aws_s3_bucket_public_access_block" "rules_bucket_access_block" {
   restrict_public_buckets = true
 }
 
-# resource "aws_s3_bucket_acl" "rules_acl" {
-#   bucket = aws_s3_bucket.rules_bucket.id
-#   acl    = "private"
-# }
-
+# Configure bucket encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "rules_encryption" {
   bucket = aws_s3_bucket.rules_bucket.id
 
@@ -28,13 +26,13 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "rules_encryption"
   }
 }
 
+# Create a folder structure for the rules
 resource "aws_s3_object" "object" {
   for_each = toset(["AWS/DEV", "AWS/QA", "AWS/PROD", "AWS/ALL", "AZURE/DEV", "AZURE/QA", "AZURE/PROD", "AZURE/ALL"])
   bucket   = aws_s3_bucket.rules_bucket.id
   key      = "ALL/${each.key}/"
 }
 
-# For testing purposes
 resource "aws_s3_object" "ago_keys" {
   for_each = toset(["AWS/DEV", "AWS/QA", "AWS/PROD", "AWS/ALL", "AZURE/DEV", "AZURE/QA", "AZURE/PROD", "AZURE/ALL"])
   bucket   = aws_s3_bucket.rules_bucket.id

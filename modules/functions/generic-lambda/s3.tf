@@ -1,3 +1,4 @@
+# Zip the Lambda source code
 data "archive_file" "zip_file" {
   type        = "zip"
   source_dir  = var.source_dir
@@ -6,6 +7,7 @@ data "archive_file" "zip_file" {
   output_file_mode = "0666"
 }
 
+# Upload the zip file to S3
 resource "aws_s3_object" "object" {
   bucket = var.s3_source_bucket
   key    = "src/${var.function_name}/${var.function_name}-${data.archive_file.zip_file.output_md5}.zip"

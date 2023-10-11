@@ -1,8 +1,10 @@
+# Create S3 bucket for Lambda source packages
 resource "aws_s3_bucket" "lambda_source_bucket" {
   bucket = "${var.resource_prefix}-lambda-source-packages"
   tags   = var.tags
 }
 
+# Configure bucket to block public access
 resource "aws_s3_bucket_public_access_block" "lambda_source_bucket_access_block" {
   bucket = aws_s3_bucket.lambda_source_bucket.id
 
@@ -12,11 +14,7 @@ resource "aws_s3_bucket_public_access_block" "lambda_source_bucket_access_block"
   restrict_public_buckets = true
 }
 
-# resource "aws_s3_bucket_acl" "lambda_source_acl" {
-#   bucket = aws_s3_bucket.lambda_source_bucket.id
-#   acl    = "private"
-# }
-
+# Configure bucket versioning
 resource "aws_s3_bucket_versioning" "lambda_source_versioning" {
   bucket = aws_s3_bucket.lambda_source_bucket.id
   versioning_configuration {
@@ -24,6 +22,7 @@ resource "aws_s3_bucket_versioning" "lambda_source_versioning" {
   }
 }
 
+# Configure bucket encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "lambda_source_encryption" {
   bucket = aws_s3_bucket.lambda_source_bucket.id
 

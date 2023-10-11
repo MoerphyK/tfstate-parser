@@ -1,0 +1,16 @@
+{
+  "name": "example_lambda",
+  "type": "aws_lambda_function",
+  "count": 1,
+  "module": "root",
+  "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+  "index-keys": []
+},
+{
+  "name": "example_bucket",
+  "type": "aws_s3_bucket",
+  "count": 1,
+  "module": "root",
+  "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+  "index-keys": []
+}

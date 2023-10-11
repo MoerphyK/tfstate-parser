@@ -43,7 +43,7 @@ class ComplianceChecker:
                     ## Check if there are multiple instances of the resource, in case of count or for_each
                     for instance in resource['instances']:
                             attributes = instance['attributes']
-                            is_compliant, reason = self.check_condition(attributes, condition)
+                            is_compliant, errors = self.check_condition(attributes, condition)
 
                             result = {
                                     'rule_name': rule['RuleName'],
@@ -53,7 +53,7 @@ class ComplianceChecker:
                                     'resource_type': resource_type,
                                     'resource_id': attributes.get('id', 'no id found'),
                                     'compliance_status': is_compliant,
-                                    'reason': reason
+                                    'errors': errors
                             }
                     results.append(result)
             ## TODO: Add second return value to indicate if there are any non compliant results
@@ -77,15 +77,17 @@ class ComplianceChecker:
                     rules = value
 
             if operator_fn is None:
-                return False, 'Invalid operator'
+                return False, 'Invalid condition operator'
 
             rule_results = []
+            errors = []
             for rule in rules:
-                result,_ = self.check_rule(rule,attributes)
+                result, error = self.check_rule(rule,attributes)
                 rule_results.append(result)
+                errors.append(error)
 
             logger.info(f'check_condition - results: {rule_results}')
-            return operator_fn(rule_results), ''
+            return operator_fn(rule_results), errors
 
     def check_rule(self, rule, attributes):
             '''
@@ -99,13 +101,15 @@ class ComplianceChecker:
             operator_str = rule.get('operator', '')
             key = rule.get('key', '')
             value = rule.get('value')
+            
+            # Check rule inputs validity
+            if not key or not operator_str:
+                return False, 'Invalid rule'
 
             # Get operator
             operator_fn = self.get_operator_function(operator_str)
             logger.info(f'check_rule - operator: {operator_str}')
-            # Check rule inputs validity
-            if not key or not operator_str:
-                return False, 'Invalid rule'
+
 
             actual_value = self.get_attribute_value(attributes, key)
 
@@ -114,7 +118,7 @@ class ComplianceChecker:
             elif actual_value == None and operator_str == 'contains':
                 return False, "Key can't be found in resource attributes."
             elif actual_value == None and operator_str == 'not_contains':
-                return True, "Key can't be found in resource attributes."
+                return True, "Value can't be found in resource attributes."
 
             return operator_fn(actual_value, value),''
             

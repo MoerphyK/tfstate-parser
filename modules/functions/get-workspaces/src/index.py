@@ -81,8 +81,8 @@ def parse_workspace_infos(workspaces, date):
                 if environment != None:
                         short_workspace['environment'] = environment
                 else:
-                        logger.error(f"Workspace '{short_workspace['name']}' does not have any tags")
-                        continue
+                        logger.error(f"Workspace '{short_workspace['name']}' does not have an environment tag.")
+                        raise Exception(f"Workspace '{short_workspace['name']}' does not have an environment tag.")
 
                 short_workspace['report_date'] = date
 

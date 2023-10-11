@@ -1,3 +1,4 @@
+# Create a IAM policy to allow the Lambda function to access the TFE token secret 
 data "aws_iam_policy_document" "lambda_secret_access_policy_document" {
   statement {
     actions = [
@@ -8,6 +9,7 @@ data "aws_iam_policy_document" "lambda_secret_access_policy_document" {
   }
 }
 
+# Create the Lambda function
 module "generic_lambda" {
   source           = "../generic-lambda"
   function_name    = "${var.resource_prefix}-${var.function_name}"

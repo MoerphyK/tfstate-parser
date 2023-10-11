@@ -1,8 +1,10 @@
+# Create a S3 bucket for the Compliance Checker results and reports
 resource "aws_s3_bucket" "reporting_bucket" {
   bucket = "${var.resource_prefix}-reports"
   tags   = var.tags
 }
 
+# Configure bucket to block public access
 resource "aws_s3_bucket_public_access_block" "reporting_bucket_access_block" {
   bucket = aws_s3_bucket.reporting_bucket.id
 
@@ -12,11 +14,7 @@ resource "aws_s3_bucket_public_access_block" "reporting_bucket_access_block" {
   restrict_public_buckets = true
 }
 
-# resource "aws_s3_bucket_acl" "reporting_acl" {
-#   bucket = aws_s3_bucket.reporting_bucket.id
-#   acl    = "private"
-# }
-
+# Configure bucket encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "reporting_encryption" {
   bucket = aws_s3_bucket.reporting_bucket.id
 

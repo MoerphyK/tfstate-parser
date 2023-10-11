@@ -11,6 +11,7 @@ terraform {
   }
 }
 
+# Create the Lambda function
 resource "aws_lambda_function" "lambda_function" {
   depends_on        = [aws_iam_role_policy_attachment.AWSLambdaVPCAccessExecutionRole]
   function_name     = var.function_name
