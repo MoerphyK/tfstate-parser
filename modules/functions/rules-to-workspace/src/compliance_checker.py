@@ -56,7 +56,6 @@ class ComplianceChecker:
                                     'errors': errors
                             }
                     results.append(result)
-            ## TODO: Add second return value to indicate if there are any non compliant results
             return results
 
     def check_condition(self, attributes, condition):

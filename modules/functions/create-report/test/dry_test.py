@@ -43,7 +43,6 @@ def get_s3_keys_by_timestamp(timestamp):
         return s3_keys
 
 ## Return the timestamp from the SFN success event
-## TODO:: Make it use the timestamp from the event instead of the timestamp from the S3 key
 def get_s3_keys_from_event(event):
         output = json.loads(event['detail']['output'])
         timestamp = output[0][0].split('/')[0]

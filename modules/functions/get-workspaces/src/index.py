@@ -7,6 +7,7 @@ import requests
 # Init secretsmanager from boto3
 sm_client = boto3.client('secretsmanager')
 
+# Get environment variables
 tfe_client_secret       = os.environ['TFE_TOKEN_CREDENTIALS']
 tfe_endpoint            = os.environ['TFE_ENDPOINT']
 
@@ -63,7 +64,6 @@ def parse_workspace_infos(workspaces, date):
         logger.debug(f"Parsing workspaces from {workspaces} response")
         short_workspaces = []
         for workspace in workspaces:
-                # TODO: Verify None is the correct check
                 short_workspace = {}
                  # Skip workspaces that currently do not have a state
                 if workspace['relationships']['current-state-version']['data'] == None:

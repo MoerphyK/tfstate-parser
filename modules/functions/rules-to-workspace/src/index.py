@@ -10,6 +10,7 @@ from aws_lambda_powertools import Logger
 import boto3
 from boto3.dynamodb.conditions import Attr
 
+# Get environment variables
 rules_table             = os.environ['RULES_TABLE']
 reporting_bucket        = os.environ['REPORTING_BUCKET']
 tfe_client_secret       = os.environ['TFE_TOKEN_CREDENTIALS']
@@ -67,10 +68,15 @@ def slim_down_resource_types(full_resource_types):
         return resource_types
 
 def upload_results_to_s3(results, workspace):
-        # Upload results to S3, while the key is generated from the workspace information
+        '''
+        Upload the results to S3
+        params: results - results to upload to S3
+                workspace - workspace information
+                returns: key - s3 key of the uploaded results        
+        '''
         logger.info("Uploading results to S3")
+        
         # Generate current date for the s3 key
-        # TODO: Upload the results as a csv file
         key = f"{workspace['report_date']}/{workspace['organization']}/{workspace['name']}/results.json"
         # Upload the results to S3
         response = s3_client.put_object(
@@ -179,36 +185,6 @@ def get_resource_types(state_version):
 
         return resource_types
 
-# def find_rule_keys(entity, environment, resource_types):
-#         '''
-#         Find the rule s3 keys that match the entity, environment and resource types
-#         params: entity - entity to find rules for
-#                 environment - environment to find rules for
-#                 resource_types - dict of providers and resource types
-#         returns: filtered_rule_keys - list of rule s3 keys
-#         '''
-#         filtered_rule_keys = []
-#         # For each provider, get the resource types and find the rules
-#         for provider in resource_types:
-#                 # Get the rule s3 keys that match the entity, environment, provider and resource types
-#                 response = table.scan(
-#                 FilterExpression=
-#                         Attr('Entity').eq('ALL') &
-#                         Attr('Environment').eq('ALL') &
-#                         Attr('Provider').eq('AWS') &
-#                         Attr('ResourceType').is_in(resource_types[provider])
-#                 )
-#                 if 'Items' not in response:
-#                         logger.info(f"No rules found for entity {entity}, environment {environment}, provider {provider} and resource types {resource_types[provider]}")
-#                         continue
-#                 else:
-#                         items = response['Items']
-#                         # For each found rule, add the s3 key to the list of filtered rule keys
-#                         for item in items:
-#                                 filtered_rule_keys.append(item['S3Key'])
-
-#         return filtered_rule_keys
-
 def get_rules(workspace, resource_types):
         '''
         Find the rule s3 keys that match the entity, environment and resource types
@@ -267,9 +243,6 @@ def lambda_handler(event, context):
                 for rule in rules:
                         logger.info(f"Apply rule {rule['S3Key']} for entity {rule['Entity']}, environment {rule['Environment']}, provider {rule['Provider']} and resource type {rule['ResourceType']}")
                         results.append(cc.check_compliance(rule, sorted_state))
-        # TODO: Format the results to be converted more easily
         result_s3_key = upload_results_to_s3(results, workspace)
 
         return result_s3_key
-
-## TODO:: Rule in AGO S3 key did not apply to workspace from AGO organization

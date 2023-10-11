@@ -7,6 +7,7 @@ from fpdf import FPDF
 # Init secretsmanager from boto3
 s3_client = boto3.client('s3')
 
+# Get environment variables
 reporting_bucket = os.environ['REPORTING_BUCKET']
 
 # PDF Colors
@@ -23,7 +24,11 @@ logger = Logger(service=service)
 #################
 
 def get_s3_keys_by_timestamp(timestamp):
-        """Get the S3 keys by timestamp"""
+        '''
+        Get the S3 keys by timestamp
+        params: timestamp - timestamp of the results
+        return value: list of S3 keys
+        '''
         # Get the list of S3 keys
         json_files = s3_client.list_objects_v2(Bucket=reporting_bucket, Prefix=timestamp)
         # Check if there are any S3 keys
@@ -36,9 +41,12 @@ def get_s3_keys_by_timestamp(timestamp):
                 raise Exception(f'No S3 keys found for timestamp: {timestamp}')
         return s3_keys
 
-## Return the timestamp from the SFN success event
-## TODO:: Make it use the timestamp from the event instead of the timestamp from the S3 key
 def get_s3_keys_from_event(event):
+        '''
+        Get the S3 keys from the event
+        params: event - Event that triggered the lambda
+        return value: timestamp of the results
+        '''
         output = json.loads(event['detail']['output'])
         timestamp = output[0][0].split('/')[0]
         # Example timestamp = "2023-06-19-15-22-50"

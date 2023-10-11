@@ -8,6 +8,7 @@ import datetime
 # Init secretsmanager from boto3
 sm_client = boto3.client('secretsmanager')
 
+# Get environment variables
 tfe_client_secret       = os.environ['TFE_TOKEN_CREDENTIALS']
 tfe_endpoint            = os.environ['TFE_ENDPOINT']
 current_date            = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")

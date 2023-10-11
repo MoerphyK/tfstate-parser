@@ -7,6 +7,7 @@ import os
 s3_client = boto3.client('s3')
 ddb_client = boto3.client('dynamodb')
 
+# Get environment variables
 rules_bucket = os.environ['RULES_BUCKET']
 rules_table = os.environ['RULES_TABLE']
 
@@ -61,7 +62,6 @@ def validate_rule_object(rule, object_key):
                 logger.error(f"Rule object is missing required fields: {rule}")
                 raise Exception(f"Rule object is missing required fields: {rule}")
         if len(rule['condition']['rules']) > 1 and 'operator' not in rule['condition']:
-                # TODO: Check if operator is valid for the number of rules
                 logger.error(f"Rule object has multiple rules but not operator: {rule}")
                 raise Exception(f"Rule object has multiple rules but not operator: {rule}")
                         
@@ -73,8 +73,6 @@ def validate_rule_object(rule, object_key):
         if rule['compliance_level'] not in compliance_levels:
                 logger.error(f"Rule object has invalid compliance level: {rule['compliance_level']} must be one of {compliance_levels}")
                 raise Exception(f"Rule object has invalid compliance level: {rule['compliance_level']} must be one of {compliance_levels}")
-        # Validate condition
-        # TODO: Validate condition
 
 def load_rule(object_key):
         '''
@@ -172,6 +170,12 @@ def remove_rule(object_key):
         logger.info(f"DynamoDB response: {response}")
 
 def lambda_handler(event, context):
+        '''
+        Lambda handler
+        params: event (dict)
+        params: context (dict)
+        return: None
+        '''
         logger.info(event)
         for record in event['Records']:
                 validate_object(record)
